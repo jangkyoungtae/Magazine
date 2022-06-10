@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import styled from 'styled-components';
 import CustomButton from './CustomButton';
 
