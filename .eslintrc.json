@@ -1,0 +1,70 @@
+{    
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "react-hooks"
+    ],
+    "extends": [
+        "prettier",
+        "airbnb",
+        "airbnb/hooks",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ],
+                "moduleDirectory": [
+                    "node_modules",
+                    "@types"
+                ]
+            },
+            "typescript": "./tsconfig.json" // 프로젝트 Root의 tsconfig.json을 찾는다.
+        },
+        "useTabs": false
+    },    
+    "rules": {
+        "jsx-a11y/label-has-associated-control": "off",
+        "react/jsx-props-no-spreading": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "react/react-in-jsx-scope": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": [
+            "warn",
+            {
+                "additionalHooks": "useRecoilCallback"
+            }
+        ],
+        "react/jsx-filename-extension": [
+            2,
+            { "extensions": [".js", ".jsx", ".ts", ".tsx"
+                ]
+            }
+        ],
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto",
+                "useTabs":true
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
+        
+    }
+    
+}
