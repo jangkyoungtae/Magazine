@@ -23,21 +23,25 @@ const BoaderAdd = styled.div`
 	float: right;
 	z-index: 999;
 `;
-const MainContainer = styled.div`
-	height: 100vh;
-	width: 100%;
-`;
+
 const BackgroundImage = styled.img`
 	z-index: -1;
 	position: fixed;
 	width: 100%;
 	height: 105vh;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-user-drag: none;
 `;
 
 export default function BoaderPagePresenter({ item }: { item: Array<IBoaderList> }) {
 	const navigate = useNavigate();
 	const movePageAdd = () => {
-		navigate('/');
+		navigate('/write');
 	};
 	return (
 		<>

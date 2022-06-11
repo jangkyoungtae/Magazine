@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CustomButton from '../../Components/CustomButton';
 import LoginForm from '../../Components/LoginForm';
 import SignupForm from '../../Components/SignupForm';
+import WriteForm from '../../Components/WriteForm';
 
 const MainContainer = styled.div`
 	height: 100vh;
@@ -33,7 +34,7 @@ const LoginText = styled.h1`
 	font-size: 60px;
 	margin: 0px;
 `;
-export default function LoginPagePresenter() {
+export default function WriteBoardPresenter() {
 	const navigate = useNavigate();
 	const { state } = useLocation();
 	const moveSignup = () => {
@@ -45,20 +46,9 @@ export default function LoginPagePresenter() {
 	};
 	return (
 		<MainContainer>
-			<BackgroundImage src="/img/MOKOKO_2022_04.png" />
-			<LoginText>{!state ? '로그인' : '회원가입'}</LoginText>
-			{!state ? <LoginForm /> : <SignupForm />}
-			{!state && (
-				<CustomButton
-					item="회원가입"
-					onClickEvent={moveSignup}
-					color="#2b923f"
-					width={445}
-					height={60}
-					fSize={35}
-					radius={10}
-				/>
-			)}
+			<BackgroundImage src="/img/MOKOKO_2022_08.png" />
+			<LoginText>글작성</LoginText>
+			<WriteForm />
 		</MainContainer>
 	);
 }

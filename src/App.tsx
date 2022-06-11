@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import BoaderPage from './Pages/BoaderPage';
 import LoginPage from './Pages/LoginPage';
+import WriteBoard from './Pages/WriteBoard';
 
 const GlobalStyle = createGlobalStyle`
 	body{
@@ -23,6 +24,7 @@ function App() {
 					<Route path="/login" element={<LoginPage />}>
 						<Route path=":signup" element={<LoginPage />} />
 					</Route>
+					<Route path="/write" element={<WriteBoard />} />
 				</Routes>
 			</BrowserRouter>
 		</QueryClientProvider>

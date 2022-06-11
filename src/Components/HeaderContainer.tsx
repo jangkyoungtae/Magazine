@@ -70,7 +70,7 @@ export default function HeaderContainer({ item }: { item: IBoaderList }) {
 				}}
 			>
 				<ButtonBox>
-					<CustomButton item="알림" color="black" onClickEvent={alaramHandle} fSize={30} radius={20} />
+					{/* <CustomButton item="알림" color="black" onClickEvent={alaramHandle} fSize={30} radius={20} /> */}
 				</ButtonBox>
 				<ButtonBox>
 					<CustomButton item="로그아웃" color="black" onClickEvent={logoutHandle} fSize={30} radius={20} />

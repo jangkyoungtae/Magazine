@@ -58,7 +58,7 @@ export default function SignupForm() {
 				<InputText type="text" placeholder="ID" {...register('id', { required: true, maxLength: 80 })} />
 			</InputBox>
 			<InputBox>
-				<InputText type="text" placeholder="Email" {...register('Email', { required: true, maxLength: 80 })} />
+				<InputText type="text" placeholder="Nickname" {...register('Nickname', { required: true, maxLength: 80 })} />
 			</InputBox>
 			<InputBox>
 				<InputText
