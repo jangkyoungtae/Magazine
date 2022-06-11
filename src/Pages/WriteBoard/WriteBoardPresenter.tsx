@@ -1,8 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import CustomButton from '../../Components/CustomButton';
-import LoginForm from '../../Components/LoginForm';
-import SignupForm from '../../Components/SignupForm';
 import WriteForm from '../../Components/WriteForm';
 
 const MainContainer = styled.div`
@@ -35,15 +31,6 @@ const LoginText = styled.h1`
 	margin: 0px;
 `;
 export default function WriteBoardPresenter() {
-	const navigate = useNavigate();
-	const { state } = useLocation();
-	const moveSignup = () => {
-		navigate(':signup', {
-			state: {
-				isSignup: true,
-			},
-		});
-	};
 	return (
 		<MainContainer>
 			<BackgroundImage src="/img/MOKOKO_2022_08.png" />

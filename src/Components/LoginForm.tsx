@@ -50,6 +50,7 @@ export default function LoginForm() {
 		formState: { errors },
 	} = useForm();
 	const onSubmit = (data: FieldValues) => {
+		console.log(data);
 		navigate('/');
 	};
 	console.log(errors);

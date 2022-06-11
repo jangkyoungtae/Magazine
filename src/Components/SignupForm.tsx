@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
+/* eslint-disable no-console */
+import { FieldValues, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import CustomButton from './CustomButton';
 
 const InputText = styled.input`
 	width: 400px;
@@ -49,7 +49,10 @@ export default function SignupForm() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data: any) => navigate('/login');
+	const onSubmit = (data: FieldValues) => {
+		console.log(data);
+		navigate('/login');
+	};
 	console.log(errors);
 
 	return (

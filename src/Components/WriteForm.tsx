@@ -1,9 +1,8 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/alt-text */
-import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import CustomButton from './CustomButton';
 
 const InputText = styled.textarea`
 	display: inline-block;
@@ -115,14 +114,13 @@ const Image = styled.img`
 	object-fit: cover;
 `;
 export default function WriteForm() {
-	const navigate = useNavigate();
 	const [imageUrl, setImageUrl] = useState<string>();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data: any) => {
+	const onSubmit = (data: FieldValues) => {
 		console.log('test ', data);
 		// navigate('/login');
 	};
