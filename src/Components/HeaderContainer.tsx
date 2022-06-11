@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable camelcase */
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IBoaderList } from '../Types/boaderType';
@@ -47,9 +49,7 @@ export default function HeaderContainer({ item }: { item: IBoaderList }) {
 	const logoutHandle = () => {
 		navigate('/login');
 	};
-	const alaramHandle = () => {
-		console.log('로그아웃');
-	};
+
 	return (
 		<BoaderHeader>
 			<HeaderBox>

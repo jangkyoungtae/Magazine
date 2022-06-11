@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -49,7 +49,9 @@ export default function LoginForm() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data: any) => navigate('/');
+	const onSubmit = (data: FieldValues) => {
+		navigate('/');
+	};
 	console.log(errors);
 
 	return (
