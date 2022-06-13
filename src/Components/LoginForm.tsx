@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-console */
 import { FieldValues, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +16,7 @@ const InputSubmit = styled.input`
 	color: white;
 	box-shadow: 0 0 40px 40px #2b923f inset, 0 0 0 0 #2b923f;
 	transition: all 150ms ease-in-out;
-	width: 445px;
+	width: 100%;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;
@@ -28,12 +29,18 @@ const InputSubmit = styled.input`
 		font-weight: bold;
 	}
 `;
+const KakaoImage = styled.img`
+	object-fit: cover;
+	height: 62px;
+	margin: 0px;
+	cursor: pointer;
+`;
 
 const InputBox = styled.div`
 	margin: 40px;
 	display: flex;
 	box-sizing: border-box;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 `;
 const InputContainer = styled.form`

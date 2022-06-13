@@ -1,8 +1,10 @@
 export interface IBoaderList {
 	id: number;
-	word: string;
-	description: string;
-	example: string;
+	nickname: string;
+	content: string;
+	img_url: string;
+	likes: number;
+	type: number;
 }
 
 export interface ISliderOption {
@@ -11,4 +13,15 @@ export interface ISliderOption {
 	speed: number;
 	slidesToShow: number;
 	slidesToScroll: number;
+}
+
+export interface ITestList {
+	nickname: string;
+	content: string;
+	img_url: string;
+	likes: number;
+}
+
+export interface IBorder {
+	boders: Array<ITestList>;
 }

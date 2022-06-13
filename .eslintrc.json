@@ -30,6 +30,7 @@
         "useTabs": false
     },    
     "rules": {
+        "@typescript-eslint/no-var-requires": "error",
         "jsx-a11y/label-has-associated-control": "off",
         "react/jsx-props-no-spreading": "off",
         "@typescript-eslint/no-non-null-assertion": "off",

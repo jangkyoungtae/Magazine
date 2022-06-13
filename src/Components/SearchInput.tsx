@@ -29,7 +29,7 @@ export default function SearchInput() {
 	return (
 		<InputContainer>
 			<InputSearch type="text" />
-			<CustomButton item="검색" color="black" width={60} height={60} fSize={30} onClickEvent={searchHandler} />
+			<CustomButton item="검색" color="#1f1f1f" width={60} height={60} fSize={30} onClickEvent={searchHandler} />
 		</InputContainer>
 	);
 }

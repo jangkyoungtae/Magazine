@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
 import BoaderPage from './Pages/BoaderPage';
 import LoginPage from './Pages/LoginPage';
 import WriteBoard from './Pages/WriteBoard';
@@ -17,16 +18,18 @@ function App() {
 	const queryClient = new QueryClient();
 	return (
 		<QueryClientProvider client={queryClient}>
-			<BrowserRouter>
-				<GlobalStyle />
-				<Routes>
-					<Route path="/" element={<BoaderPage />} />
-					<Route path="/login" element={<LoginPage />}>
-						<Route path=":signup" element={<LoginPage />} />
-					</Route>
-					<Route path="/write" element={<WriteBoard />} />
-				</Routes>
-			</BrowserRouter>
+			<RecoilRoot>
+				<BrowserRouter>
+					<GlobalStyle />
+					<Routes>
+						<Route path="/" element={<BoaderPage />} />
+						<Route path="/login" element={<LoginPage />}>
+							<Route path=":signup" element={<LoginPage />} />
+						</Route>
+						<Route path="/write" element={<WriteBoard />} />
+					</Routes>
+				</BrowserRouter>
+			</RecoilRoot>
 		</QueryClientProvider>
 	);
 }

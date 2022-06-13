@@ -1,8 +1,14 @@
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/alt-text */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { QueryClient, useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { callAddBoard } from '../API/BoaderApi';
+import BoardAtom from '../Atoms/BoardAtom';
+import { IBoaderList } from '../Types/boaderType';
 
 const InputText = styled.textarea`
 	display: inline-block;
@@ -115,16 +121,27 @@ const Image = styled.img`
 `;
 export default function WriteForm() {
 	const [imageUrl, setImageUrl] = useState<string>();
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+	const mutation = useMutation((addData: FieldValues) => callAddBoard(addData), {
+		onSuccess: () => {
+			queryClient.invalidateQueries('boader_list');
+		},
+	});
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data: FieldValues) => {
-		console.log('test ', data);
-		// navigate('/login');
-	};
-	console.log(errors);
+	const onSubmit = useCallback(
+		(data: FieldValues) => {
+			mutation.mutate(data);
+			navigate('/');
+		},
+		[mutation]
+	);
+
+	// console.log(errors);
 	const fileGetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const filename = e.target.files;
 

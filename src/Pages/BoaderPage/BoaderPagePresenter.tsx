@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { selector, useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import BoardAtom from '../../Atoms/BoardAtom';
 import BoaderCard from '../../Components/BoaderCard';
 import CustomButton from '../../Components/CustomButton';
 import HeaderContainer from '../../Components/HeaderContainer';
@@ -38,23 +41,38 @@ const BackgroundImage = styled.img`
 	-webkit-user-drag: none;
 `;
 
-export default function BoaderPagePresenter({ item }: { item: Array<IBoaderList> }) {
+export default function BoaderPagePresenter() {
 	const navigate = useNavigate();
 	const movePageAdd = () => {
 		navigate('/write');
 	};
+
+	const count = useRecoilValue(BoardAtom);
 	return (
-		<>
-			<BackgroundImage src="/img/MOKOKO_2022_06.png" />
-			<HeaderContainer item={item[0]} />
-			<BoaderContainer>
-				{item.map((v) => {
-					return <BoaderCard key={v.id} card={v} />;
-				})}
-				<BoaderAdd>
-					<CustomButton onClickEvent={movePageAdd} item="글 작성" color="black" width={80} height={80} fSize={30} />
-				</BoaderAdd>
-			</BoaderContainer>
-		</>
+		<div>
+			{count ? (
+				<div>
+					<BackgroundImage src="/img/MOKOKO_2022_06.png" />
+					<HeaderContainer />
+					<BoaderContainer>
+						{count.map((v) => {
+							return <BoaderCard key={v.id} card={v} />;
+						})}
+						<BoaderAdd>
+							<CustomButton
+								onClickEvent={movePageAdd}
+								item="글 작성"
+								color="#1f1f1f"
+								width={80}
+								height={80}
+								fSize={30}
+							/>
+						</BoaderAdd>
+					</BoaderContainer>{' '}
+				</div>
+			) : (
+				<div>data가 없습니다.</div>
+			)}
+		</div>
 	);
 }
