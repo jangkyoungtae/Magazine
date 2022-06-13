@@ -3,6 +3,8 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import BoardAtom from '../../Atoms/BoardAtom';
 import BoaderCard from '../../Components/BoaderCard';
+import BoaderCard2 from '../../Components/BoaderCard2';
+import BoaderCard3 from '../../Components/BoaderCard3';
 import CustomButton from '../../Components/CustomButton';
 import HeaderContainer from '../../Components/HeaderContainer';
 
@@ -53,7 +55,14 @@ export default function BoaderPagePresenter() {
 					<HeaderContainer />
 					<BoaderContainer>
 						{count.map((v) => {
-							return <BoaderCard key={v.id} card={v} />;
+							if (v.type === 1) {
+								return <BoaderCard key={v.id} card={v} />;
+							}
+							if (v.type === 2) {
+								return <BoaderCard2 key={v.id} card={v} />;
+							}
+
+							return <BoaderCard3 key={v.id} card={v} />;
 						})}
 						<BoaderAdd>
 							<CustomButton

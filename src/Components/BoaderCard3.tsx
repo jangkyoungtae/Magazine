@@ -26,12 +26,13 @@ const ProfileBox = styled.div`
 	display: flex;
 `;
 const CardBodyBox = styled.div`
+	display: flex;
 	width: 100%;
 `;
 const ConotentBox = styled.div`
 	font-family: 'Dongle', sans-serif;
 	box-sizing: border-box;
-	width: 100%;
+	width: 70%;
 	border-radius: 10px;
 	padding-left: 20px;
 	display: flex;
@@ -40,7 +41,6 @@ const ConotentBox = styled.div`
 `;
 
 const Content = styled.p`
-	width: 480px;
 	font-size: 28px;
 	color: black;
 	margin: 0px;
@@ -74,7 +74,7 @@ const ContentImageBox = styled.div`
 	border-radius: 20px;
 	background-color: white;
 	margin: 0px;
-	padding: 40px;
+	padding: 10px;
 	box-sizing: border-box;
 	overflow: hidden;
 	display: flex;
@@ -82,12 +82,14 @@ const ContentImageBox = styled.div`
 `;
 const ContentImage = styled.img`
 	width: 100%;
+	object-fit: contain;
 `;
 const HeartBox = styled.div`
 	width: 100%;
 	height: 50px;
 	object-fit: cover;
-	margin: 10px;
+	padding: 40px;
+	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -110,7 +112,7 @@ const TextMore = styled.span`
 	cursor: pointer;
 `;
 
-export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element {
+export default function BoaderCard3({ card }: { card: IBoaderList }): JSX.Element {
 	const [heart, setHeart] = useState(false);
 	const [moreText, setMoreText] = useState(card.content && card.content.length < 30);
 	const navigate = useNavigate();
@@ -158,6 +160,14 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 				/>
 			</ProfileBox>
 			<CardBodyBox>
+				<ContentImageBox>
+					<ContentImage src={card.img_url} alt="" />
+				</ContentImageBox>
+				{/* <ImageSlider>
+					<ContentImageBox>
+						<ContentImage src={card.img_url} alt="" />
+					</ContentImageBox>
+				</ImageSlider> */}
 				{card.content && (
 					<ConotentBox>
 						{moreText ? (
@@ -172,21 +182,11 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 						)}
 					</ConotentBox>
 				)}
-				<ContentImageBox>
-					<ContentImage src={card.img_url} alt="" />
-				</ContentImageBox>
-				{/* <ImageSlider>
-					<ContentImageBox>
-						<ContentImage src={card.img_url} alt="" />
-					</ContentImageBox>
-				</ImageSlider> */}
-				<ConotentBox>
-					<HeartBox>
-						<HeartText>좋아요 {like(card.likes)}</HeartText>
-						<HeartImage onClick={heartClick} src={!heart ? '/img/heart.png' : '/img/heart_pick.png'} />
-					</HeartBox>
-				</ConotentBox>
 			</CardBodyBox>
+			<HeartBox>
+				<HeartText>좋아요 {like(card.likes)}</HeartText>
+				<HeartImage onClick={heartClick} src={!heart ? '/img/heart.png' : '/img/heart_pick.png'} />
+			</HeartBox>
 		</CardContainer>
 	);
 }

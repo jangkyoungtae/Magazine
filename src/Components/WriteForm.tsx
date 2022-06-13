@@ -1,17 +1,19 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/alt-text */
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { callAddBoard } from '../API/BoaderApi';
+import { boardApi } from '../API/BoaderApi';
+import { IBoaderList } from '../Types/boaderType';
 
 const InputText = styled.textarea`
 	display: inline-block;
 	padding: 10px; /* label의 패딩값과 일치 */
-	width: 550px;
-	height: 300px;
+	width: 100%;
+	height: 230px;
 	font-size: 30px;
 	border: none;
 	resize: none;
@@ -78,8 +80,9 @@ const InputImageBox = styled.div`
 `;
 
 const ImageBox = styled.div`
-	width: 400px;
-	padding: 20px;
+	width: 20%;
+	padding: 10px;
+	box-shadow: 2px 3px 3px black;
 	border-radius: 20px;
 	background-color: white;
 `;
@@ -113,31 +116,58 @@ const InputContainer = styled.form`
 `;
 
 const Image = styled.img`
-	width: 400px;
+	width: 100%;
+	border-radius: 20px;
 	object-fit: cover;
 `;
-export default function WriteForm() {
-	const [imageUrl, setImageUrl] = useState<string>();
+
+export default function WriteForm({ card, tpye }: { card?: IBoaderList; tpye: number }) {
+	const [imageUrl, setImageUrl] = useState<string | undefined>(card?.img_url);
+	const [inputContents, setInputContents] = useState<string | undefined>(card?.content);
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
-	const mutation = useMutation((addData: FieldValues) => callAddBoard(addData), {
+	/*
+	추가하는 R-Q Mutation
+	addData :react-hook-form 에서 전달받은 값
+	*/
+	const mutation = useMutation((addData: FieldValues) => boardApi.callAddBoard(addData), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
 		},
 	});
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm();
+
+	/*
+	수정하는 R-Q Mutation
+	upData :react-hook-form 에서 전달받은 값
+	card?.card.id : 해당 게시물의 아이디
+	*/
+	const upMutation = useMutation((upData: FieldValues) => boardApi.callModifyBoard(upData, tpye, card), {
+		onSuccess: () => {
+			queryClient.invalidateQueries('boader_list');
+		},
+	});
+	const { register, handleSubmit } = useForm();
+
+	/*
+	react-hook-form submit 실행시 시작
+	data: form 안에 있는 input 의 데이터 값의 객체
+	현재 게시물의 데이터를가지고 있다면 수정
+	현재 게시물 정보가없다면 추가
+	*/
 	const onSubmit = useCallback(
 		(data: FieldValues) => {
-			mutation.mutate(data);
+			console.log('test');
+			if (!card) mutation.mutate(data);
+			else upMutation.mutate(data);
 			navigate('/');
 		},
-		[mutation, navigate]
+		[card, mutation, navigate, upMutation]
 	);
-	console.log(errors);
+
+	/*
+	react-hook-form 의 input 파일 형식의 데이텨 변경시
+	image 의 url 변경
+	*/
 	const fileGetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const filename = e.target.files;
 
@@ -149,7 +179,12 @@ export default function WriteForm() {
 	return (
 		<InputContainer onSubmit={handleSubmit(onSubmit)}>
 			<InputContentsBox>
-				<InputText placeholder="Contents" {...register('Contents', { required: true, maxLength: 150 })} />
+				<InputText
+					placeholder="Contents"
+					{...register('Contents', { required: true, maxLength: 150 })}
+					value={inputContents}
+					onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputContents(e.target.value)}
+				/>
 				{/* <InputText type="text" placeholder="ID" {...register('id', { required: false, maxLength: 80 })} /> */}
 			</InputContentsBox>
 			<InputImageBox>
@@ -163,7 +198,7 @@ export default function WriteForm() {
 					id="files"
 					type="file"
 					placeholder="image_files"
-					{...register('image', { required: true, maxLength: 100 })}
+					{...register('image', { required: false, maxLength: 2000 })}
 					onChange={fileGetChange}
 				/>
 			</InputImageBox>

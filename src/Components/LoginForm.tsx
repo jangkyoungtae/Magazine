@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-console */
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { userApi } from '../API/BoaderApi';
 
 const InputText = styled.input`
 	width: 400px;
@@ -43,33 +46,61 @@ const InputContainer = styled.form`
 	align-items: center;
 `;
 
+const InputSubmitDisable = styled.input`
+	font-family: 'Dongle', sans-serif;
+	color: #606060;
+	box-shadow: 0 0 40px 40px #cecece inset, 0 0 0 0 #cecece;
+	transition: all 150ms ease-in-out;
+	background-color: #cecece;
+	width: 445px;
+	box-sizing: border-box;
+	justify-content: center;
+	align-items: center;
+	font-size: 40px;
+	border-radius: 10px;
+`;
+
 export default function LoginForm() {
 	const navigate = useNavigate();
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm();
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const { register, handleSubmit } = useForm();
+
+	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
+		onSuccess: () => {
+			localStorage.setItem('token', 'testToken');
+			navigate('/');
+		},
+	});
+
 	const onSubmit = (data: FieldValues) => {
-		console.log(data);
-		navigate('/');
+		mutation.mutate(data);
 	};
-	console.log(errors);
 
 	return (
 		<InputContainer onSubmit={handleSubmit(onSubmit)}>
 			<InputBox>
-				<InputText type="text" placeholder="ID" {...register('id', { required: true, maxLength: 80 })} />
+				<InputText
+					type="text"
+					placeholder="Email"
+					{...register('email', { required: true, maxLength: 80 })}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+				/>
 			</InputBox>
 			<InputBox>
 				<InputText
 					type="password"
 					placeholder="Password"
 					{...register('password', { required: true, maxLength: 100 })}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
 				/>
 			</InputBox>
 			<InputBox>
-				<InputSubmit type="submit" value="로그인" />
+				{email && password ? (
+					<InputSubmit type="submit" value="로그인" />
+				) : (
+					<InputSubmitDisable type="submit" value="로그인" disabled />
+				)}
 			</InputBox>
 		</InputContainer>
 	);
