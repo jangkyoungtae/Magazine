@@ -2,13 +2,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useCallback, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { QueryClient, useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { callAddBoard } from '../API/BoaderApi';
-import BoardAtom from '../Atoms/BoardAtom';
-import { IBoaderList } from '../Types/boaderType';
 
 const InputText = styled.textarea`
 	display: inline-block;
@@ -138,10 +135,9 @@ export default function WriteForm() {
 			mutation.mutate(data);
 			navigate('/');
 		},
-		[mutation]
+		[mutation, navigate]
 	);
-
-	// console.log(errors);
+	console.log(errors);
 	const fileGetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const filename = e.target.files;
 

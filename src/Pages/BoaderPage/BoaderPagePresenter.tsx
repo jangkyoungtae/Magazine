@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { selector, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import BoardAtom from '../../Atoms/BoardAtom';
 import BoaderCard from '../../Components/BoaderCard';
 import CustomButton from '../../Components/CustomButton';
 import HeaderContainer from '../../Components/HeaderContainer';
-
-import { IBoaderList } from '../../Types/boaderType';
 
 const BoaderContainer = styled.div`
 	width: 600px;

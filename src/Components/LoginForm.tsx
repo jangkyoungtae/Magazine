@@ -29,12 +29,6 @@ const InputSubmit = styled.input`
 		font-weight: bold;
 	}
 `;
-const KakaoImage = styled.img`
-	object-fit: cover;
-	height: 62px;
-	margin: 0px;
-	cursor: pointer;
-`;
 
 const InputBox = styled.div`
 	margin: 40px;

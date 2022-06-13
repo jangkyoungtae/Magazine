@@ -2,7 +2,6 @@
 /* eslint-disable camelcase */
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { IBoaderList } from '../Types/boaderType';
 import CustomButton from './CustomButton';
 import SearchInput from './SearchInput';
 
