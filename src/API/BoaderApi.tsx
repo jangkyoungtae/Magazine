@@ -12,7 +12,7 @@ const boaderApi = axios.create({
 	// baseURL: 'http://localhost:5008/',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // boaderApi.interceptors.request.use(
 // 	function (config) {
@@ -28,7 +28,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 // );
 
 const callBoaderList = async ({ pageParam = 1 }) => {
-	const data = await callUrl.get(`/board`);
+	const data = await boaderApi.get(`/board`);
 	return data;
 };
 
@@ -37,7 +37,7 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	forms.append('file', value.image[0]);
 	forms.append('content', value.Contents);
 	console.log(forms);
-	const res = await callUrl.post('/board', forms, {
+	const res = await boaderApi.post('/board', forms, {
 		headers: {
 			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
 			'Content-Type': 'multipart/form-data',
