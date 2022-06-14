@@ -28,7 +28,7 @@ boaderApi.interceptors.request.use(
 );
 
 const callBoaderList = async ({ pageParam = 1 }) => {
-	const data = await callUrl.get(`/borders?_sort=id&_order=desc&_page=${pageParam}&_limits=6`);
+	const data = await callUrl.get(`/border`);
 	return data;
 };
 
