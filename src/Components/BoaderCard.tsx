@@ -140,7 +140,7 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 	};
 
 	const modifyClick = () => {
-		console.log('클릭했다');
+		console.log('클릭했다test');
 		navigate('/write', {
 			state: {
 				card,
