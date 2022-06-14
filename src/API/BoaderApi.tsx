@@ -39,7 +39,8 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	console.log(forms);
 	const res = await axios.post('http://3.35.233.99/api/board', forms, {
 		headers: {
-			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
+			'X-Auth-Token':
+				'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0NDFAdDUudDYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTY1NTIxMTM3NiwiZXhwIjoxNjU1NTcxMzc2fQ.t4RbjNWHYIyaUhcXPLBKUT_yiqB_F9qubp614G2ImzU',
 			'Content-Type': 'multipart/form-data',
 		},
 	});
