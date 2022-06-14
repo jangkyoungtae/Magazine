@@ -8,8 +8,8 @@ import { IBoaderList } from '../Types/boaderType';
 import setupInterceptorsTo from './Interceptors';
 
 const boaderApi = axios.create({
-	// baseURL: 'http://13.209.99.119/api/',
-	baseURL: 'http://localhost:5008/',
+	baseURL: 'http://13.209.99.119/api/',
+	// baseURL: 'http://localhost:5008/',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -28,41 +28,19 @@ boaderApi.interceptors.request.use(
 );
 
 const callBoaderList = async ({ pageParam = 1 }) => {
-	const data = await callUrl.get(`/borders?_sort=id&_order=desc&_page=${pageParam}&_limits=6`);
+	const data = await callUrl.get(`/board`);
 	return data;
 };
-
-// const callAddBoard = async (value: FieldValues, type: number) => {
-// 	const addDatas = {
-// 		nickname: '김종국',
-// 		content: value.Contents,
-// 		type,
-// 		likes: 0,
-// 		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
-// 	};
-// 	const forms = new FormData();
-// 	forms.append('file', value.image[0]);
-// 	forms.append('content', value.Contents);
-
-// 	const res = await callUrl.post('/borders', forms, {
-// 		headers: {
-// 			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
-// 			'Content-Type': 'multipart/form-data',
-// 		},
-// 	});
-// 	return res;
-// };
-
 const callAddBoard = async (value: FieldValues, type: number) => {
-	const addDatas = {
-		nickname: '김종국',
-		content: value.Contents,
-		type,
-		likes: 0,
-		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
-	};
-
-	const res = await callUrl.post('/borders', addDatas);
+	const forms = new FormData();
+	forms.append('file', value.image[0]);
+	forms.append('content', value.Contents);
+	const res = await callUrl.post('/board', forms, {
+		headers: {
+			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
+			'Content-Type': 'multipart/form-data',
+		},
+	});
 	return res;
 };
 
