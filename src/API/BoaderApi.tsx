@@ -8,7 +8,7 @@ import { IBoaderList } from '../Types/boaderType';
 import setupInterceptorsTo from './Interceptors';
 
 const boaderApi = axios.create({
-	baseURL: 'http://13.209.99.119/api/',
+	baseURL: 'http://3.35.233.99/api/',
 	// baseURL: 'http://localhost:5008/',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
