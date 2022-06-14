@@ -8,24 +8,24 @@ import { IBoaderList } from '../Types/boaderType';
 import setupInterceptorsTo from './Interceptors';
 
 const boaderApi = axios.create({
-	baseURL: 'http://3.35.233.99/api/',
+	baseURL: 'http://3.35.233.99/api',
 	// baseURL: 'http://localhost:5008/',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-boaderApi.interceptors.request.use(
-	function (config) {
-		if (config.headers) {
-			config.headers.Authorization = localStorage.getItem('Authorization') || 0 || false;
-		}
-		return config;
-	},
-	function (error) {
-		// 요청 오류가 있는 작업 수행
-		return Promise.reject(error);
-	}
-);
+// boaderApi.interceptors.request.use(
+// 	function (config) {
+// 		if (config.headers) {
+// 			config.headers.Authorization = localStorage.getItem('Authorization') || 0 || false;
+// 		}
+// 		return config;
+// 	},
+// 	function (error) {
+// 		// 요청 오류가 있는 작업 수행
+// 		return Promise.reject(error);
+// 	}
+// );
 
 const callBoaderList = async ({ pageParam = 1 }) => {
 	const data = await callUrl.get(`/board`);
