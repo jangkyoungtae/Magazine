@@ -9,7 +9,7 @@ import setupInterceptorsTo from './Interceptors';
 
 const boaderApi = axios.create({
 	// baseURL: 'http://codjaeho.shop/api',
-	baseURL: 'http://localhost:5008/',
+	baseURL: 'http://hhmagazine.s3-website.ap-northeast-2.amazonaws.com/',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
 
