@@ -18,5 +18,6 @@ export default function BoaderPageContainer() {
 		}
 	);
 
-	return <div>{isLoading ? <div>로딩중...</div> : <BoaderPagePresenter />}</div>;
+	// return <div>{isLoading ? <div>로딩중...</div> : <BoaderPagePresenter />}</div>;
+	return <BoaderPagePresenter />;
 }
