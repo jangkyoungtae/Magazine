@@ -1,6 +1,8 @@
+/* eslint-disable func-names */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react-hooks/rules-of-hooks */
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { FieldValues } from 'react-hook-form';
 import { IBoaderList } from '../Types/boaderType';
 import setupInterceptorsTo from './Interceptors';
@@ -24,16 +26,16 @@ boaderApi.interceptors.request.use(
 	}
 );
 
-const callBoaderList = async () => {
-	const data = await callUrl.get('/borders?_sort=id&_order=desc');
+const callBoaderList = async ({ pageParam = 1 }) => {
+	const data = await callUrl.get(`/borders?_sort=id&_order=desc&_page=${pageParam}&_limits=6`);
 	return data;
 };
 
-const callAddBoard = async (value: FieldValues) => {
+const callAddBoard = async (value: FieldValues, type: number) => {
 	const addDatas = {
 		nickname: '김종국',
 		content: value.Contents,
-		type: 2,
+		type,
 		likes: 0,
 		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
 	};
@@ -85,7 +87,7 @@ export const userApi = {
 };
 
 export const boardApi = {
-	callBoaderList: () => callBoaderList(),
-	callAddBoard: (data: FieldValues) => callAddBoard(data),
+	callBoaderList: (pageParam: number) => callBoaderList({ pageParam }),
+	callAddBoard: (data: FieldValues, type: number) => callAddBoard(data, type),
 	callModifyBoard: (value: FieldValues, type: number, card?: IBoaderList) => callModifyBoard(value, type, card),
 };

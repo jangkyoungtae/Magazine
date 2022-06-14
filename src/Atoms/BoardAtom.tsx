@@ -16,3 +16,7 @@ export default atom<Array<IBoaderList>>({
 		},
 	],
 });
+export const Token = atom<string>({
+	key: 'token',
+	default: '',
+});

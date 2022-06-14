@@ -10,10 +10,9 @@ import { boardApi } from '../API/BoaderApi';
 import { IBoaderList } from '../Types/boaderType';
 
 const InputText = styled.textarea`
-	display: inline-block;
 	padding: 10px; /* label의 패딩값과 일치 */
 	width: 100%;
-	height: 230px;
+	height: 100%;
 	font-size: 30px;
 	border: none;
 	resize: none;
@@ -37,7 +36,7 @@ const InputSubmit = styled.input`
 	color: white;
 	box-shadow: 0 0 40px 40px #2b923f inset, 0 0 0 0 #2b923f;
 	transition: all 150ms ease-in-out;
-	width: 445px;
+	width: 100%;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;
@@ -60,8 +59,10 @@ const InputBox = styled.div`
 `;
 
 const InputContentsBox = styled.div`
-	margin: 40px;
 	padding: 30px;
+	width: 100%;
+	height: 400px;
+	border: 1px solid black;
 	display: flex;
 	box-sizing: border-box;
 	justify-content: center;
@@ -95,7 +96,7 @@ const InputImageLabel = styled.label`
 	margin-top: 10px;
 	box-shadow: 0 0 40px 40px #2b923f inset, 0 0 0 0 #2b923f;
 	transition: all 150ms ease-in-out;
-	width: 445px;
+	width: 100%;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;
@@ -111,6 +112,7 @@ const InputImageLabel = styled.label`
 `;
 const InputContainer = styled.form`
 	box-sizing: border-box;
+	width: 100%;
 	justify-content: center;
 	align-items: center;
 `;
@@ -121,7 +123,7 @@ const Image = styled.img`
 	object-fit: cover;
 `;
 
-export default function WriteForm({ card, tpye }: { card?: IBoaderList; tpye: number }) {
+export default function WriteForm({ card, types }: { card?: IBoaderList; types: number }) {
 	const [imageUrl, setImageUrl] = useState<string | undefined>(card?.img_url);
 	const [inputContents, setInputContents] = useState<string | undefined>(card?.content);
 	const navigate = useNavigate();
@@ -130,7 +132,7 @@ export default function WriteForm({ card, tpye }: { card?: IBoaderList; tpye: nu
 	추가하는 R-Q Mutation
 	addData :react-hook-form 에서 전달받은 값
 	*/
-	const mutation = useMutation((addData: FieldValues) => boardApi.callAddBoard(addData), {
+	const mutation = useMutation((addData: FieldValues) => boardApi.callAddBoard(addData, types), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
 		},
@@ -141,7 +143,7 @@ export default function WriteForm({ card, tpye }: { card?: IBoaderList; tpye: nu
 	upData :react-hook-form 에서 전달받은 값
 	card?.card.id : 해당 게시물의 아이디
 	*/
-	const upMutation = useMutation((upData: FieldValues) => boardApi.callModifyBoard(upData, tpye, card), {
+	const upMutation = useMutation((upData: FieldValues) => boardApi.callModifyBoard(upData, types, card), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
 		},

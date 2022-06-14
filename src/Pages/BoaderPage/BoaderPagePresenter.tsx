@@ -1,3 +1,7 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -7,6 +11,7 @@ import BoaderCard2 from '../../Components/BoaderCard2';
 import BoaderCard3 from '../../Components/BoaderCard3';
 import CustomButton from '../../Components/CustomButton';
 import HeaderContainer from '../../Components/HeaderContainer';
+import useIntersectionObserver from '../../Hooks/useIntersectionObserver';
 
 const BoaderContainer = styled.div`
 	width: 600px;
@@ -40,13 +45,32 @@ const BackgroundImage = styled.img`
 	-webkit-user-drag: none;
 `;
 
+const BoaderBox = styled.div`
+	width: 100%;
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+`;
 export default function BoaderPagePresenter() {
+	const [itemCount, setItemCount] = useState(1);
 	const navigate = useNavigate();
+	const count = useRecoilValue(BoardAtom);
+	const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+		if (isIntersecting) {
+			setItemCount((v) => {
+				if (count.length - 1 > v + 1) {
+					return v + 1;
+				}
+				return count.length - 1;
+			});
+		}
+	};
 	const movePageAdd = () => {
 		navigate('/write');
 	};
+	const { setTarget } = useIntersectionObserver({ onIntersect });
 
-	const count = useRecoilValue(BoardAtom);
 	return (
 		<div>
 			{count ? (
@@ -54,15 +78,37 @@ export default function BoaderPagePresenter() {
 					<BackgroundImage src="/img/MOKOKO_2022_06.png" />
 					<HeaderContainer />
 					<BoaderContainer>
-						{count.map((v) => {
-							if (v.type === 1) {
-								return <BoaderCard key={v.id} card={v} />;
+						{count.map((v, i) => {
+							if (i !== itemCount) {
+								return (
+									count.length >= itemCount &&
+									i <= itemCount && (
+										<BoaderBox key={v.id}>
+											{v.type === 1 ? (
+												<BoaderCard key={v.id} card={v} />
+											) : v.type === 2 ? (
+												<BoaderCard2 key={v.id} card={v} />
+											) : (
+												<BoaderCard3 key={v.id} card={v} />
+											)}
+										</BoaderBox>
+									)
+								);
 							}
-							if (v.type === 2) {
-								return <BoaderCard2 key={v.id} card={v} />;
-							}
-
-							return <BoaderCard3 key={v.id} card={v} />;
+							return (
+								count.length >= itemCount &&
+								i <= itemCount && (
+									<BoaderBox key={v.id} ref={setTarget}>
+										{v.type === 1 ? (
+											<BoaderCard key={v.id} card={v} />
+										) : v.type === 2 ? (
+											<BoaderCard2 key={v.id} card={v} />
+										) : (
+											<BoaderCard3 key={v.id} card={v} />
+										)}
+									</BoaderBox>
+								)
+							);
 						})}
 						<BoaderAdd>
 							<CustomButton
@@ -74,7 +120,7 @@ export default function BoaderPagePresenter() {
 								fSize={30}
 							/>
 						</BoaderAdd>
-					</BoaderContainer>{' '}
+					</BoaderContainer>
 				</div>
 			) : (
 				<div>data가 없습니다.</div>
