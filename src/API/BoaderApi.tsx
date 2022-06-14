@@ -27,8 +27,8 @@ const callUrl = setupInterceptorsTo(boaderApi);
 // 	}
 // );
 
-const callBoaderList = async ({ pageParam = 1 }) => {
-	const data = await boaderApi.get(`/board`);
+const callBoaderList = async () => {
+	const data = await axios.get(`http://3.35.233.99/api/board`);
 	return data;
 };
 
@@ -37,7 +37,7 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	forms.append('file', value.image[0]);
 	forms.append('content', value.Contents);
 	console.log(forms);
-	const res = await boaderApi.post('/board', forms, {
+	const res = await axios.post('http://3.35.233.99/api/board', forms, {
 		headers: {
 			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
 			'Content-Type': 'multipart/form-data',
@@ -100,7 +100,7 @@ export const userApi = {
 };
 
 export const boardApi = {
-	callBoaderList: (pageParam: number) => callBoaderList({ pageParam }),
+	callBoaderList: () => callBoaderList(),
 	callDelBoard: (card?: IBoaderList) => callDelBoard(card),
 	callAddBoard: (data: FieldValues, type: number) => callAddBoard(data, type),
 	callModifyBoard: (value: FieldValues, type: number, card?: IBoaderList) => callModifyBoard(value, type, card),

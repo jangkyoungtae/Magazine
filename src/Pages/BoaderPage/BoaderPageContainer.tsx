@@ -9,8 +9,8 @@ export default function BoaderPageContainer() {
 	const setBoarder = useSetRecoilState<Array<IBoaderList>>(BoardAtom);
 	const { isLoading } = useQuery(
 		'boader_list',
-		async ({ pageParam }) => {
-			const res = await boardApi.callBoaderList(pageParam);
+		async () => {
+			const res = await boardApi.callBoaderList();
 			return res;
 		},
 		{
