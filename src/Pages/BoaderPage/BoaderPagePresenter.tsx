@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
@@ -7,8 +6,6 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import BoardAtom from '../../Atoms/BoardAtom';
 import BoaderCard from '../../Components/BoaderCard';
-import BoaderCard2 from '../../Components/BoaderCard2';
-import BoaderCard3 from '../../Components/BoaderCard3';
 import CustomButton from '../../Components/CustomButton';
 import HeaderContainer from '../../Components/HeaderContainer';
 import useIntersectionObserver from '../../Hooks/useIntersectionObserver';
@@ -84,13 +81,7 @@ export default function BoaderPagePresenter() {
 									count.length >= itemCount &&
 									i <= itemCount && (
 										<BoaderBox key={v.id}>
-											{v.type === 1 ? (
-												<BoaderCard card={v} />
-											) : v.type === 2 ? (
-												<BoaderCard2 card={v} />
-											) : (
-												<BoaderCard3 card={v} />
-											)}
+											<BoaderCard card={v} />
 										</BoaderBox>
 									)
 								);
@@ -99,13 +90,7 @@ export default function BoaderPagePresenter() {
 								count.length >= itemCount &&
 								i <= itemCount && (
 									<BoaderBox key={v.id} ref={setTarget}>
-										{v.type === 1 ? (
-											<BoaderCard card={v} />
-										) : v.type === 2 ? (
-											<BoaderCard2 card={v} />
-										) : (
-											<BoaderCard3 card={v} />
-										)}
+										<BoaderCard card={v} />
 									</BoaderBox>
 								)
 							);

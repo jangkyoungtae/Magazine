@@ -8,10 +8,11 @@ import { IBoaderList } from '../Types/boaderType';
 import setupInterceptorsTo from './Interceptors';
 
 const boaderApi = axios.create({
-	baseURL: 'http://3.35.233.99/api/',
-	// baseURL: 'http://localhost:5008/',
+	// baseURL: 'http://codjaeho.shop/api',
+	baseURL: 'http://localhost:5008/',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
+
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 boaderApi.interceptors.request.use(
@@ -28,25 +29,38 @@ boaderApi.interceptors.request.use(
 );
 
 const callBoaderList = async ({ pageParam = 1 }) => {
-	const data = await callUrl.get(`/board`);
+	const data = await callUrl.get(`/boards?_sort=id&_order=desc&_page=${pageParam}&_limits=6`);
 	return data;
 };
+
 const callAddBoard = async (value: FieldValues, type: number) => {
 	const forms = new FormData();
-	forms.append('layout', '1');
-	forms.append('image', value.image[0]);
+	forms.append('layoutType', type.toString());
+	forms.append('img', value.image[0]);
 	forms.append('content', value.Contents);
-	const res = await callUrl.post('/board', forms, {
+	const res = await callUrl.post('/boards', forms, {
 		headers: {
-			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
+			Authorization: process.env.REACT_APP_ACCESS_TOKEN || false,
 			'Content-Type': 'multipart/form-data',
 		},
 	});
 	return res;
 };
+// const callAddBoard = async (value: FieldValues, type: number) => {
+// 	const addDatas = {
+// 		nickname: '김종국',
+// 		content: value.Contents,
+// 		type,
+// 		likes: 0,
+// 		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
+// 	};
+
+// 	const res = await callUrl.post('/borders', addDatas);
+// 	return res;
+// };
 
 const callDelBoard = async (card?: IBoaderList) => {
-	const data = await callUrl.delete(`/borders/${card?.id}`);
+	const data = await callUrl.delete(`/boards/${card?.id}`);
 	return data;
 };
 
@@ -55,11 +69,11 @@ const callModifyBoard = async (value: FieldValues, tpye: number, card?: IBoaderL
 		nickname: card?.nickname,
 		likes: card?.likes,
 		content: value.Contents,
-		type: tpye,
+		layoutType: tpye,
 		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
 	};
 
-	const res = await callUrl.put(`/borders/${card?.id}`, addDatas);
+	const res = await callUrl.put(`/boards/${card?.id}`, addDatas);
 	return res;
 };
 
@@ -69,7 +83,7 @@ const callSignUpUser = async (value: FieldValues) => {
 		email: value.email,
 		password: value.password,
 	};
-	const res = await callUrl.post('/users', addDatas);
+	const res = await callUrl.post('/signup', addDatas);
 	return res;
 };
 const callSignInUser = async (value: FieldValues) => {
@@ -77,7 +91,7 @@ const callSignInUser = async (value: FieldValues) => {
 		email: value.email,
 		password: value.password,
 	};
-	const res = await callUrl.post('/users', addDatas);
+	const res = await callUrl.post('/login', addDatas);
 	return res;
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 import { useState } from 'react';
@@ -9,7 +10,6 @@ import { IBoaderList } from '../Types/boaderType';
 import CustomButton from './CustomButton';
 
 const CardContainer = styled.article`
-	width: 100%;
 	box-sizing: border-box;
 	background-color: white;
 	border-radius: 20px;
@@ -17,6 +17,7 @@ const CardContainer = styled.article`
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
+	width: 100%;
 	margin: 20px;
 `;
 const ProfileBox = styled.div`
@@ -27,23 +28,35 @@ const ProfileBox = styled.div`
 	align-items: center;
 	display: flex;
 `;
-const CardBodyBox = styled.div`
+const CardBodyBox = styled.div<{ type: number }>`
 	width: 100%;
+	display: ${(props) => (props.type === 1 ? 'block' : 'flex')};
+	align-items: center;
+	.second {
+		order: ${(props) => (props.type === 3 ? 0 : 1)};
+	}
+	.first {
+		order: ${(props) => (props.type === 3 ? 1 : 0)};
+	}
 `;
-const ConotentBox = styled.div`
+const ConotentBox = styled.div<{ type: number }>`
 	font-family: 'Dongle', sans-serif;
 	box-sizing: border-box;
-	width: 100%;
 	border-radius: 10px;
-	padding-left: 20px;
-	display: flex;
-	justify-content: space-between;
-	padding: 0px 30px;
+	width: ${(props) => (props.type > 1 ? '40%' : '100%')};
+	padding-top: 40px;
+	padding-left: ${(props) => (props.type > 1 ? (props.type > 2 ? '0px' : '40px') : '40px')};
+	padding-right: ${(props) => (props.type > 1 ? (props.type > 2 ? '40px' : '0px') : '40px')};
 `;
-
+const ContentImageBox = styled.div`
+	background-color: white;
+	margin: 0px;
+	padding: 40px;
+	box-sizing: border-box;
+	overflow: hidden;
+`;
 const Content = styled.p`
-	width: 480px;
-	font-size: 28px;
+	font-size: 23px;
 	color: black;
 	margin: 0px;
 	margin-bottom: 10px;
@@ -72,14 +85,7 @@ const ProfileImage = styled.img`
 	height: 50px;
 	margin-right: 8px;
 `;
-const ContentImageBox = styled.div`
-	background-color: white;
-	margin: 0px;
-	padding: 40px;
-	box-sizing: border-box;
-	overflow: hidden;
-	display: flex;
-`;
+
 const ContentImage = styled.img`
 	border-radius: 20px;
 	width: 100%;
@@ -97,6 +103,7 @@ const HeartImage = styled.img`
 	width: 40px;
 	object-fit: cover;
 	cursor: pointer;
+	margin-right: 40px;
 `;
 
 const HeartText = styled.p`
@@ -190,9 +197,9 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 					/>
 				</ButtonBox>
 			</ProfileBox>
-			<CardBodyBox>
+			<CardBodyBox type={card.type}>
 				{card.content && (
-					<ConotentBox>
+					<ConotentBox className="first" type={card.type}>
 						{moreText ? (
 							<Content>
 								{`${card.content}`}
@@ -205,7 +212,7 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 						)}
 					</ConotentBox>
 				)}
-				<ContentImageBox>
+				<ContentImageBox className="second">
 					<ContentImage src={card.img_url} alt="" />
 				</ContentImageBox>
 				{/* <ImageSlider>
@@ -213,13 +220,11 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 						<ContentImage src={card.img_url} alt="" />
 					</ContentImageBox>
 				</ImageSlider> */}
-				<ConotentBox>
-					<HeartBox>
-						<HeartText>좋아요 {like(card.likes)}</HeartText>
-						<HeartImage onClick={heartClick} src={!heart ? '/img/heart.png' : '/img/heart_pick.png'} />
-					</HeartBox>
-				</ConotentBox>
 			</CardBodyBox>
+			<HeartBox>
+				<HeartText>좋아요 {like(card.likes)}</HeartText>
+				<HeartImage onClick={heartClick} src={!heart ? '/img/heart.png' : '/img/heart_pick.png'} />
+			</HeartBox>
 		</CardContainer>
 	);
 }

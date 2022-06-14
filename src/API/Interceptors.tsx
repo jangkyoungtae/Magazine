@@ -8,7 +8,6 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 		'Access-Control-Allow-Origin': '*',
 		'Access-Control-Allow-Methods': '*',
 		'Access-Control-Allow-Headers': '*',
-		'Content-Type': 'application/json',
 	};
 	return config;
 };

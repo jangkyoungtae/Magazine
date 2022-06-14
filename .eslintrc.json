@@ -4,6 +4,10 @@
         "@typescript-eslint",
         "react-hooks"
     ],
+    "env": {
+        "browser": true,
+        "node": true
+    },
     "extends": [
         "prettier",
         "airbnb",
@@ -11,6 +15,9 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended"
     ],
+    "globals": {
+        "$": true
+    },
     "settings": {
         "import/resolver": {
             "node": {
