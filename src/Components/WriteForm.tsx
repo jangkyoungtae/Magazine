@@ -123,7 +123,7 @@ const Image = styled.img`
 	object-fit: cover;
 `;
 
-export default function WriteForm({ card, types }: { card?: IBoaderList; types: number }) {
+export default function WriteForm({ card, type }: { card?: IBoaderList; type: number }) {
 	const [imageUrl, setImageUrl] = useState<string | undefined>(card?.img_url);
 	const [inputContents, setInputContents] = useState<string | undefined>(card?.content);
 	const navigate = useNavigate();
@@ -132,7 +132,7 @@ export default function WriteForm({ card, types }: { card?: IBoaderList; types: 
 	추가하는 R-Q Mutation
 	addData :react-hook-form 에서 전달받은 값
 	*/
-	const mutation = useMutation((addData: FieldValues) => boardApi.callAddBoard(addData, types), {
+	const mutation = useMutation((addData: FieldValues) => boardApi.callAddBoard(addData, type), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
 		},
@@ -143,7 +143,7 @@ export default function WriteForm({ card, types }: { card?: IBoaderList; types: 
 	upData :react-hook-form 에서 전달받은 값
 	card?.card.id : 해당 게시물의 아이디
 	*/
-	const upMutation = useMutation((upData: FieldValues) => boardApi.callModifyBoard(upData, types, card), {
+	const upMutation = useMutation((upData: FieldValues) => boardApi.callModifyBoard(upData, type, card), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
 		},

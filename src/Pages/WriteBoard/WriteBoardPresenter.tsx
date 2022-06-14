@@ -71,7 +71,7 @@ export default function WriteBoardPresenter({ state }: { state: IBoaderList }) {
 			<AddContainer>
 				<LoginText>글작성</LoginText>
 
-				<WriteForm card={state} types={(state && state.type) || tpye} />
+				<WriteForm card={state} type={tpye} />
 			</AddContainer>
 			<TypeContainer>
 				<TypeBox onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(Number(e.target.value))}>
