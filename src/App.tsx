@@ -17,11 +17,6 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
 	const queryClient = new QueryClient();
-	const token = localStorage.getItem('Authorization');
-	const setLogin = useSetRecoilState(Token);
-	if (token) {
-		setLogin(true);
-	}
 	return (
 		<QueryClientProvider client={queryClient}>
 			<RecoilRoot>
