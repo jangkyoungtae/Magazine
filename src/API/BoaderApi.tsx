@@ -36,7 +36,7 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	const forms = new FormData();
 	forms.append('file', value.image[0]);
 	forms.append('content', value.Contents);
-
+	console.log(forms);
 	const res = await callUrl.post('/board', forms, {
 		headers: {
 			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
