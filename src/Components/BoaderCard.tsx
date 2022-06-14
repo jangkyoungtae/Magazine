@@ -115,12 +115,14 @@ const TextMore = styled.span`
 const ButtonBox = styled.div`
 	display: flex;
 `;
+
 export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element {
 	const [heart, setHeart] = useState(false);
 	const [moreText, setMoreText] = useState(card.content && card.content.length < 30);
 	const navigate = useNavigate();
 
 	const queryClient = useQueryClient();
+
 	const mutation = useMutation((addData: IBoaderList) => boardApi.callDelBoard(addData), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
@@ -139,12 +141,15 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 			},
 		});
 	};
+
 	const heartClick = () => {
 		setHeart(!heart);
 	};
+
 	const moreClick = () => {
 		setMoreText(!moreText);
 	};
+
 	const like = (count: number) => {
 		if (count > 10000) {
 			return `${count / 1000}k`;

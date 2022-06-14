@@ -122,6 +122,7 @@ export default function BoaderCard2({ card }: { card: IBoaderList }): JSX.Elemen
 	const navigate = useNavigate();
 
 	const queryClient = useQueryClient();
+
 	const mutation = useMutation((addData: IBoaderList) => boardApi.callDelBoard(addData), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');

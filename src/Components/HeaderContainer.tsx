@@ -40,8 +40,9 @@ const ButtonBox = styled.div`
 
 export default function HeaderContainer() {
 	const navigate = useNavigate();
+	const token = localStorage.getItem('Authorization');
 	const logoutHandle = () => {
-		localStorage.removeItem('token');
+		localStorage.removeItem('Authorization');
 		navigate('/login');
 	};
 
@@ -68,7 +69,13 @@ export default function HeaderContainer() {
 					{/* <CustomButton item="알림" color="black" onClickEvent={alaramHandle} fSize={30} radius={20} /> */}
 				</ButtonBox>
 				<ButtonBox>
-					<CustomButton item="로그아웃" color="#1f1f1f" onClickEvent={logoutHandle} fSize={30} radius={20} />
+					<CustomButton
+						item={token ? '로그아웃' : '로그인'}
+						color="#1f1f1f"
+						onClickEvent={logoutHandle}
+						fSize={30}
+						radius={20}
+					/>
 				</ButtonBox>
 			</HeaderBox>
 		</BoaderHeader>

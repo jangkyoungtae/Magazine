@@ -148,6 +148,7 @@ export default function BoaderCard3({ card }: { card: IBoaderList }): JSX.Elemen
 	const heartClick = () => {
 		setHeart(!heart);
 	};
+
 	const moreClick = () => {
 		setMoreText(!moreText);
 	};
