@@ -73,16 +73,15 @@ const ProfileImage = styled.img`
 	margin-right: 8px;
 `;
 const ContentImageBox = styled.div`
-	border-radius: 20px;
 	background-color: white;
 	margin: 0px;
 	padding: 40px;
 	box-sizing: border-box;
 	overflow: hidden;
 	display: flex;
-	border: 0.03em solid #cecece;
 `;
 const ContentImage = styled.img`
+	border-radius: 20px;
 	width: 100%;
 `;
 const HeartBox = styled.div`

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import { QueryClient, QueryClientProvider, useMutation } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot, useSetRecoilState } from 'recoil';
 import BoaderPage from './Pages/BoaderPage';
 import LoginPage from './Pages/LoginPage';

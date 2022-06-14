@@ -8,7 +8,8 @@ import { IBoaderList } from '../Types/boaderType';
 import setupInterceptorsTo from './Interceptors';
 
 const boaderApi = axios.create({
-	baseURL: 'http://localhost:5008/',
+	baseURL: 'http://3.35.233.99/api/',
+	// baseURL: 'http://localhost:5008/',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -32,24 +33,36 @@ const callBoaderList = async ({ pageParam = 1 }) => {
 };
 
 const callAddBoard = async (value: FieldValues, type: number) => {
-	const addDatas = {
-		nickname: '김종국',
-		content: value.Contents,
-		type,
-		likes: 0,
-		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
-	};
-	// forms.append('file', value.image[0]);
+	const forms = new FormData();
+	forms.append('file', value.image[0]);
+	forms.append('content', value.Contents);
 
-	const res = await callUrl.post('/borders', addDatas);
+	const res = await callUrl.post('/border', forms, {
+		headers: {
+			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
+			'Content-Type': 'multipart/form-data',
+		},
+	});
 	return res;
 };
+
+// const callAddBoard = async (value: FieldValues, type: number) => {
+// 	const addDatas = {
+// 		nickname: '김종국',
+// 		content: value.Contents,
+// 		type,
+// 		likes: 0,
+// 		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
+// 	};
+
+// 	const res = await callUrl.post('/borders', addDatas);
+// 	return res;
+// };
 
 const callDelBoard = async (card?: IBoaderList) => {
 	const data = await callUrl.delete(`/borders/${card?.id}`);
 	return data;
 };
-
 const callModifyBoard = async (value: FieldValues, tpye: number, card?: IBoaderList) => {
 	const addDatas = {
 		nickname: card?.nickname,

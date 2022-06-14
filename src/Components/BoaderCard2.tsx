@@ -34,7 +34,7 @@ const CardBodyBox = styled.div`
 const ConotentBox = styled.div`
 	font-family: 'Dongle', sans-serif;
 	box-sizing: border-box;
-	width: 70%;
+	width: 50%;
 	border-radius: 10px;
 	padding-left: 20px;
 	display: flex;
@@ -43,7 +43,7 @@ const ConotentBox = styled.div`
 `;
 
 const Content = styled.p`
-	font-size: 28px;
+	font-size: 23px;
 	color: black;
 	margin: 0px;
 	margin-bottom: 10px;
@@ -80,10 +80,10 @@ const ContentImageBox = styled.div`
 	box-sizing: border-box;
 	overflow: hidden;
 	display: flex;
-	border: 0.03em solid #cecece;
 `;
 const ContentImage = styled.img`
 	width: 100%;
+	border-radius: 20px;
 	object-fit: contain;
 `;
 const HeartBox = styled.div`
