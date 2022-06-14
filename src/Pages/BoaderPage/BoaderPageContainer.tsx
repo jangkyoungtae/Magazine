@@ -6,17 +6,17 @@ import { IBoaderList } from '../../Types/boaderType';
 import BoaderPagePresenter from './BoaderPagePresenter';
 
 export default function BoaderPageContainer() {
-	const setBoarder = useSetRecoilState<Array<IBoaderList>>(BoardAtom);
-	const { isLoading } = useQuery(
-		'boader_list',
-		async () => {
-			const res = await boardApi.callBoaderList();
-			return res;
-		},
-		{
-			onSuccess: (test: { data: Array<IBoaderList> }) => setBoarder(test.data),
-		}
-	);
+	// const setBoarder = useSetRecoilState<Array<IBoaderList>>(BoardAtom);
+	// const { isLoading } = useQuery(
+	// 	'boader_list',
+	// 	async () => {
+	// 		const res = await boardApi.callBoaderList();
+	// 		return res;
+	// 	},
+	// 	{
+	// 		onSuccess: (test: { data: Array<IBoaderList> }) => setBoarder(test.data),
+	// 	}
+	// );
 
 	// return <div>{isLoading ? <div>로딩중...</div> : <BoaderPagePresenter />}</div>;
 	return <BoaderPagePresenter />;
