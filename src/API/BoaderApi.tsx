@@ -33,7 +33,8 @@ const callBoaderList = async ({ pageParam = 1 }) => {
 };
 const callAddBoard = async (value: FieldValues, type: number) => {
 	const forms = new FormData();
-	forms.append('file', value.image[0]);
+	forms.append('layout', '1');
+	forms.append('image', value.image[0]);
 	forms.append('content', value.Contents);
 	const res = await callUrl.post('/board', forms, {
 		headers: {
