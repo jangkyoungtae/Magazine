@@ -28,7 +28,7 @@ boaderApi.interceptors.request.use(
 );
 
 const callBoaderList = async ({ pageParam = 1 }) => {
-	const data = await callUrl.get(`/border`);
+	const data = await callUrl.get(`/board`);
 	return data;
 };
 
@@ -37,7 +37,7 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	forms.append('file', value.image[0]);
 	forms.append('content', value.Contents);
 
-	const res = await callUrl.post('/border', forms, {
+	const res = await callUrl.post('/board', forms, {
 		headers: {
 			'X-Auth-Token': process.env.ACCESS_TOKEN || false,
 			'Content-Type': 'multipart/form-data',
