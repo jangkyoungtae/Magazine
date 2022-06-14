@@ -42,7 +42,7 @@ export default function HeaderContainer() {
 	const navigate = useNavigate();
 	const token = localStorage.getItem('Authorization');
 	const logoutHandle = () => {
-		localStorage.removeItem('Authorization');
+		localStorage.clear();
 		navigate('/login');
 	};
 
