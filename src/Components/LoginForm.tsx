@@ -62,13 +62,15 @@ const InputSubmitDisable = styled.input`
 
 export default function LoginForm() {
 	const navigate = useNavigate();
+
 	const [email, setEmail] = useState<string>('');
+
 	const [password, setPassword] = useState<string>('');
+
 	const { register, handleSubmit } = useForm();
 
 	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
 		onSuccess: () => {
-			localStorage.setItem('Authorization', 'testToken');
 			navigate('/');
 		},
 	});
