@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider, useMutation } from 'react-query';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
 import BoaderPage from './Pages/BoaderPage';
 import LoginPage from './Pages/LoginPage';
 import WriteBoard from './Pages/WriteBoard';
+import { Token } from './Atoms/BoardAtom';
 
 const GlobalStyle = createGlobalStyle`
 	body{
@@ -16,6 +17,11 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
 	const queryClient = new QueryClient();
+	const token = localStorage.getItem('Authorization');
+	const setLogin = useSetRecoilState(Token);
+	if (token) {
+		setLogin(true);
+	}
 	return (
 		<QueryClientProvider client={queryClient}>
 			<RecoilRoot>

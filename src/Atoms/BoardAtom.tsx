@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { atom } from 'recoil';
-import { IBoaderList, IToken } from '../Types/boaderType';
+import { IBoaderList } from '../Types/boaderType';
 
 export default atom<Array<IBoaderList>>({
 	key: 'myBoarders',
@@ -16,9 +16,7 @@ export default atom<Array<IBoaderList>>({
 		},
 	],
 });
-export const Token = atom<IToken>({
-	key: 'Authorization',
-	default: {
-		Authorization: '',
-	},
+export const Token = atom<boolean>({
+	key: 'isLogin',
+	default: false,
 });
