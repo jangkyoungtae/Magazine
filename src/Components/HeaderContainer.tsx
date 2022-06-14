@@ -3,7 +3,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import CustomButton from './CustomButton';
-import SearchInput from './SearchInput';
+// import SearchInput from './SearchInput';
 
 const BoaderHeader = styled.div`
 	width: 100vw;
@@ -57,7 +57,7 @@ export default function HeaderContainer() {
 					justifyContent: 'center',
 				}}
 			>
-				<SearchInput />
+				{/* <SearchInput /> */}
 			</HeaderBox>
 			<HeaderBox
 				style={{

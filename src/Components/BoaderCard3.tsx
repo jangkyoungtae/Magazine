@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { boardApi } from '../API/BoaderApi';
 import { IBoaderList } from '../Types/boaderType';
 import CustomButton from './CustomButton';
 
@@ -25,10 +27,12 @@ const ProfileBox = styled.div`
 	align-items: center;
 	display: flex;
 `;
+
 const CardBodyBox = styled.div`
 	display: flex;
 	width: 100%;
 `;
+
 const ConotentBox = styled.div`
 	font-family: 'Dongle', sans-serif;
 	box-sizing: border-box;
@@ -111,10 +115,26 @@ const TextMore = styled.span`
 	font-size: 18px;
 	cursor: pointer;
 `;
+const ButtonBox = styled.div`
+	display: flex;
+`;
 
 export default function BoaderCard3({ card }: { card: IBoaderList }): JSX.Element {
 	const [heart, setHeart] = useState(false);
 	const [moreText, setMoreText] = useState(card.content && card.content.length < 30);
+
+	const queryClient = useQueryClient();
+
+	const mutation = useMutation((addData: IBoaderList) => boardApi.callDelBoard(addData), {
+		onSuccess: () => {
+			queryClient.invalidateQueries('boader_list');
+		},
+	});
+
+	const deleteClick = () => {
+		mutation.mutate(card);
+	};
+
 	const navigate = useNavigate();
 	const modifyClick = () => {
 		console.log('클릭했다');
@@ -124,6 +144,7 @@ export default function BoaderCard3({ card }: { card: IBoaderList }): JSX.Elemen
 			},
 		});
 	};
+
 	const heartClick = () => {
 		setHeart(!heart);
 	};
@@ -149,15 +170,26 @@ export default function BoaderCard3({ card }: { card: IBoaderList }): JSX.Elemen
 					<ProfileImage src="https://d3kxs6kpbh59hp.cloudfront.net/community/COMMUNITY/1bd033059e59464cbe7309a68ce6a569/5034f194ac3a4258aa4cdfa3e7f1205c_1650014872.jpg" />
 					<Id>{card.nickname}</Id>
 				</Profile>
-				<CustomButton
-					item="수정"
-					onClickEvent={modifyClick}
-					width={45}
-					height={45}
-					radius={70}
-					color="#2e2e2e"
-					fSize={25}
-				/>
+				<ButtonBox>
+					<CustomButton
+						item="수정"
+						onClickEvent={modifyClick}
+						width={45}
+						height={45}
+						radius={70}
+						color="#2e2e2e"
+						fSize={25}
+					/>
+					<CustomButton
+						item="삭제"
+						onClickEvent={deleteClick}
+						width={45}
+						height={45}
+						radius={70}
+						color="#2e2e2e"
+						fSize={25}
+					/>
+				</ButtonBox>
 			</ProfileBox>
 			<CardBodyBox>
 				<ContentImageBox>

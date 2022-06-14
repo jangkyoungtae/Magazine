@@ -68,7 +68,7 @@ export default function LoginForm() {
 
 	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
 		onSuccess: () => {
-			localStorage.setItem('token', 'testToken');
+			localStorage.setItem('Authorization', 'testToken');
 			navigate('/');
 		},
 	});

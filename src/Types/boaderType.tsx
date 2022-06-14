@@ -7,6 +7,10 @@ export interface IBoaderList {
 	type: number;
 }
 
+export interface IBorder {
+	boders: Array<IBoaderList>;
+}
+
 export interface ISliderOption {
 	dots: boolean;
 	infinite: boolean;
@@ -22,6 +26,6 @@ export interface ITestList {
 	likes: number;
 }
 
-export interface IBorder {
-	boders: Array<ITestList>;
+export interface IToken {
+	Authorization: string;
 }

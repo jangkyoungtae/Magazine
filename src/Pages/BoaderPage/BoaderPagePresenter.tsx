@@ -85,11 +85,11 @@ export default function BoaderPagePresenter() {
 									i <= itemCount && (
 										<BoaderBox key={v.id}>
 											{v.type === 1 ? (
-												<BoaderCard key={v.id} card={v} />
+												<BoaderCard card={v} />
 											) : v.type === 2 ? (
-												<BoaderCard2 key={v.id} card={v} />
+												<BoaderCard2 card={v} />
 											) : (
-												<BoaderCard3 key={v.id} card={v} />
+												<BoaderCard3 card={v} />
 											)}
 										</BoaderBox>
 									)
@@ -100,11 +100,11 @@ export default function BoaderPagePresenter() {
 								i <= itemCount && (
 									<BoaderBox key={v.id} ref={setTarget}>
 										{v.type === 1 ? (
-											<BoaderCard key={v.id} card={v} />
+											<BoaderCard card={v} />
 										) : v.type === 2 ? (
-											<BoaderCard2 key={v.id} card={v} />
+											<BoaderCard2 card={v} />
 										) : (
-											<BoaderCard3 key={v.id} card={v} />
+											<BoaderCard3 card={v} />
 										)}
 									</BoaderBox>
 								)

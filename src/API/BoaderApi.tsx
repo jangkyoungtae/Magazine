@@ -16,7 +16,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 boaderApi.interceptors.request.use(
 	function (config) {
 		if (config.headers) {
-			config.headers.token = localStorage.getItem('token') || 0 || false;
+			config.headers.Authorization = localStorage.getItem('Authorization') || 0 || false;
 		}
 		return config;
 	},
@@ -45,8 +45,8 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	return res;
 };
 
-const callDelBoard = async () => {
-	const data = await callUrl.post('/borders.json');
+const callDelBoard = async (card?: IBoaderList) => {
+	const data = await callUrl.delete(`/borders/${card?.id}`);
 	return data;
 };
 
@@ -88,6 +88,7 @@ export const userApi = {
 
 export const boardApi = {
 	callBoaderList: (pageParam: number) => callBoaderList({ pageParam }),
+	callDelBoard: (card?: IBoaderList) => callDelBoard(card),
 	callAddBoard: (data: FieldValues, type: number) => callAddBoard(data, type),
 	callModifyBoard: (value: FieldValues, type: number, card?: IBoaderList) => callModifyBoard(value, type, card),
 };
