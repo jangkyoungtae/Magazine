@@ -9,7 +9,7 @@ import setupInterceptorsTo from './Interceptors';
 
 const boaderApi = axios.create({
 	// baseURL: 'http://codjaeho.shop/api',
-	baseURL: 'http://hhmagazine.s3-website.ap-northeast-2.amazonaws.com/',
+	baseURL: 'http://13.209.65.162/api',
 });
 const callUrl = setupInterceptorsTo(boaderApi);
 
@@ -29,8 +29,13 @@ boaderApi.interceptors.request.use(
 );
 
 const callBoaderList = async ({ pageParam = 1 }) => {
-	const data = await callUrl.get(`/boards?_sort=id&_order=desc&_page=${pageParam}&_limits=6`);
-	return data;
+	try {
+		const data = await callUrl.get(`/boards?_sort=id&_order=desc&_page=${pageParam}&_limits=6`);
+		return data;
+	} catch (e) {
+		console.log(e);
+		return e;
+	}
 };
 
 const callAddBoard = async (value: FieldValues, type: number) => {
@@ -46,6 +51,7 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	});
 	return res;
 };
+
 // const callAddBoard = async (value: FieldValues, type: number) => {
 // 	const addDatas = {
 // 		nickname: '김종국',
