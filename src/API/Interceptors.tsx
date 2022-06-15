@@ -5,9 +5,8 @@ import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'ax
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 	console.info(`[request] [${JSON.stringify(config)}]`);
 	config.headers = {
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Methods': '*',
-		'Access-Control-Allow-Headers': '*',
+		Authorization: localStorage.getItem('token') || false,
+		'Content-Type': 'application/json',
 	};
 	return config;
 };
@@ -18,7 +17,7 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
 };
 
 const onResponse = (response: AxiosResponse): AxiosResponse => {
-	// console.info(`[response] [${JSON.stringify(response)}]`);
+	console.info(`[response] [${JSON.stringify(response)}]`);
 	return response;
 };
 

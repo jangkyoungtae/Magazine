@@ -13,27 +13,12 @@ const boaderApi = axios.create({
 });
 const callUrl = setupInterceptorsTo(boaderApi);
 
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-boaderApi.interceptors.request.use(
-	function (config) {
-		if (config.headers) {
-			config.headers.Authorization = localStorage.getItem('Authorization') || 0 || false;
-		}
-		return config;
-	},
-	function (error) {
-		// 요청 오류가 있는 작업 수행
-		return Promise.reject(error);
-	}
-);
-
 const callBoaderList = async ({ pageParam = 1 }) => {
 	try {
-		const data = await callUrl.get(`/boards?_sort=id&_order=desc&_page=${pageParam}&_limits=6`);
+		const data = await callUrl.get(`/boards`);
 		return data;
 	} catch (e) {
-		console.log(e);
+		console.log('list 오류', e);
 		return e;
 	}
 };
@@ -45,7 +30,6 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	forms.append('content', value.Contents);
 	const res = await callUrl.post('/boards', forms, {
 		headers: {
-			Authorization: process.env.REACT_APP_ACCESS_TOKEN || false,
 			'Content-Type': 'multipart/form-data',
 		},
 	});
@@ -70,16 +54,34 @@ const callDelBoard = async (card?: IBoaderList) => {
 	return data;
 };
 
-const callModifyBoard = async (value: FieldValues, tpye: number, card?: IBoaderList) => {
-	const addDatas = {
-		nickname: card?.nickname,
-		likes: card?.likes,
-		content: value.Contents,
-		layoutType: tpye,
-		img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5U2J4WdPI9AY_3LNPpTSDAdYgzZQDD9-dGg&usqp=CAU',
-	};
+const callAddLikes = async (id: number) => {
+	const data = await callUrl.post(`/boards/${id}/likes`);
+	return data;
+};
 
-	const res = await callUrl.put(`/boards/${card?.id}`, addDatas);
+const callDelLikes = async (id: number) => {
+	const data = await callUrl.delete(`/boards/${id}/likes`);
+	return data;
+};
+
+const callModifyBoard = async (value: FieldValues, type: number, card?: IBoaderList) => {
+	const forms = new FormData();
+
+	if (card) {
+		forms.append('nickname', card.nickname);
+		forms.append('content', value.Contents);
+		forms.append('layoutType', type.toString());
+		if (value.image[0]) {
+			forms.append('img', value.image[0]);
+		} else {
+			forms.append('img', card.img_url);
+		}
+	}
+	const res = await callUrl.post('/boards', forms, {
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	});
 	return res;
 };
 
@@ -111,4 +113,6 @@ export const boardApi = {
 	callDelBoard: (card?: IBoaderList) => callDelBoard(card),
 	callAddBoard: (data: FieldValues, type: number) => callAddBoard(data, type),
 	callModifyBoard: (value: FieldValues, type: number, card?: IBoaderList) => callModifyBoard(value, type, card),
+	callAddLikes: (id: number) => callAddLikes(id),
+	callDelLikes: (id: number) => callDelLikes(id),
 };

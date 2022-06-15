@@ -70,8 +70,11 @@ export default function LoginForm() {
 	const { register, handleSubmit } = useForm();
 
 	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
-		onSuccess: () => {
-			navigate('/');
+		onSuccess: (data) => {
+			if (data) {
+				localStorage.setItem('token', data.data);
+				navigate('/');
+			}
 		},
 	});
 

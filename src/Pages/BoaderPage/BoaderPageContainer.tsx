@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 import { boardApi } from '../../API/BoaderApi';
@@ -14,7 +15,10 @@ export default function BoaderPageContainer() {
 			return res;
 		},
 		{
-			onSuccess: (test: { data: Array<IBoaderList> }) => setBoarder(test.data),
+			onSuccess: (test: { data: Array<IBoaderList> }) => {
+				console.log(test.data);
+				setBoarder(test.data);
+			},
 		}
 	);
 

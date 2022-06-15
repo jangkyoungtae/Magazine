@@ -129,14 +129,26 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 
 	const queryClient = useQueryClient();
 
-	const mutation = useMutation((addData: IBoaderList) => boardApi.callDelBoard(addData), {
+	const boadrDelMutate = useMutation((addData: IBoaderList) => boardApi.callDelBoard(addData), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
 		},
 	});
+	const likesAddMutate = useMutation((addData: number) => boardApi.callAddLikes(addData), {
+		onSuccess: () => {
+			queryClient.invalidateQueries('boader_list');
+			setHeart(!heart);
+		},
+	});
+	const likesDelMutate = useMutation((addData: number) => boardApi.callDelLikes(addData), {
+		onSuccess: () => {
+			queryClient.invalidateQueries('boader_list');
+			setHeart(!heart);
+		},
+	});
 
 	const deleteClick = () => {
-		mutation.mutate(card);
+		boadrDelMutate.mutate(card);
 	};
 
 	const modifyClick = () => {
@@ -149,7 +161,11 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 	};
 
 	const heartClick = () => {
-		setHeart(!heart);
+		likesAddMutate.mutate(card.id);
+	};
+
+	const heartDelClick = () => {
+		likesDelMutate.mutate(card.id);
 	};
 
 	const moreClick = () => {
@@ -223,7 +239,10 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 			</CardBodyBox>
 			<HeartBox>
 				<HeartText>좋아요 {like(card.likes)}</HeartText>
-				<HeartImage onClick={heartClick} src={!heart ? '/img/heart.png' : '/img/heart_pick.png'} />
+				<HeartImage
+					onClick={heart ? heartDelClick : heartClick}
+					src={!heart ? '/img/heart.png' : '/img/heart_pick.png'}
+				/>
 			</HeartBox>
 		</CardContainer>
 	);

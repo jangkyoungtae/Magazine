@@ -40,7 +40,7 @@ const ButtonBox = styled.div`
 
 export default function HeaderContainer() {
 	const navigate = useNavigate();
-	const token = localStorage.getItem('Authorization');
+	const token = localStorage.getItem('token');
 	const logoutHandle = () => {
 		localStorage.clear();
 		navigate('/login');
