@@ -16,7 +16,6 @@ export default function BoaderPageContainer() {
 		},
 		{
 			onSuccess: (test: { data: Array<IBoaderList> }) => {
-				console.log(test.data);
 				setBoarder(test.data);
 			},
 		}
