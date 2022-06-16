@@ -16,6 +16,7 @@ export default atom<Array<IBoaderList>>({
 		},
 	],
 });
+
 export const Token = atom<boolean>({
 	key: 'isLogin',
 	default: false,

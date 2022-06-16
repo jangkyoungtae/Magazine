@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
 		height: 100vh;
 	}	
 `;
-
+console.log(process.env);
 function App() {
 	const queryClient = new QueryClient();
 	return (

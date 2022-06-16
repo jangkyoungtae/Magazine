@@ -5,7 +5,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { userApi } from '../API/BoaderApi';
+import { userApi } from '../API/userApi';
 
 const InputText = styled.input`
 	width: 400px;

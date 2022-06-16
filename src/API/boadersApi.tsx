@@ -1,22 +1,11 @@
-/* eslint-disable no-console */
-/* eslint-disable func-names */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-param-reassign */
-/* eslint-disable react-hooks/rules-of-hooks */
-import axios from 'axios';
+/* eslint-disable import/prefer-default-export */
 import { FieldValues } from 'react-hook-form';
 import { IBoaderList } from '../Types/boaderType';
-import setupInterceptorsTo from './Interceptors';
-
-const boaderApi = axios.create({
-	// baseURL: 'http://codjaeho.shop/api',
-	baseURL: 'http://13.209.65.162/api',
-});
-const callUrl = setupInterceptorsTo(boaderApi);
+import baseApi from './baseApi';
 
 const callBoaderList = async ({ pageParam = 1 }) => {
 	try {
-		const data = await callUrl.get(`/boards`);
+		const data = await baseApi.get(`/boards`);
 		return data;
 	} catch (e) {
 		console.log('list 오류', e);
@@ -29,7 +18,7 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 	forms.append('layoutType', type.toString());
 	forms.append('img', value.image[0]);
 	forms.append('content', value.Contents);
-	const res = await callUrl.post('/boards', forms, {
+	const res = await baseApi.post('/boards', forms, {
 		headers: {
 			'Content-Type': 'multipart/form-data',
 		},
@@ -51,17 +40,17 @@ const callAddBoard = async (value: FieldValues, type: number) => {
 // };
 
 const callDelBoard = async (card?: IBoaderList) => {
-	const data = await callUrl.delete(`/boards/${card?.id}`);
+	const data = await baseApi.delete(`/boards/${card?.id}`);
 	return data;
 };
 
 const callAddLikes = async (id: number) => {
-	const data = await callUrl.post(`/boards/${id}/likes`);
+	const data = await baseApi.post(`/boards/${id}/likes`);
 	return data;
 };
 
 const callDelLikes = async (id: number) => {
-	const data = await callUrl.delete(`/boards/${id}/likes`);
+	const data = await baseApi.delete(`/boards/${id}/likes`);
 	return data;
 };
 
@@ -78,35 +67,12 @@ const callModifyBoard = async (value: FieldValues, type: number, card?: IBoaderL
 			forms.append('img', card.img_url);
 		}
 	}
-	const res = await callUrl.post('/boards', forms, {
+	const res = await baseApi.post('/boards', forms, {
 		headers: {
 			'Content-Type': 'multipart/form-data',
 		},
 	});
 	return res;
-};
-
-const callSignUpUser = async (value: FieldValues) => {
-	const addDatas = {
-		nickname: value.nickname,
-		email: value.email,
-		password: value.password,
-	};
-	const res = await callUrl.post('/signup', addDatas);
-	return res;
-};
-const callSignInUser = async (value: FieldValues) => {
-	const addDatas = {
-		email: value.email,
-		password: value.password,
-	};
-	const res = await callUrl.post('/login', addDatas);
-	return res;
-};
-
-export const userApi = {
-	callSignUpUser: (data: FieldValues) => callSignUpUser(data),
-	callSignInUser: (data: FieldValues) => callSignInUser(data),
 };
 
 export const boardApi = {

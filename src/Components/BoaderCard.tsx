@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { boardApi } from '../API/BoaderApi';
+import { boardApi } from '../API/boadersApi';
 import { IBoaderList } from '../Types/boaderType';
 import CustomButton from './CustomButton';
 
