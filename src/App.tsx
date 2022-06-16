@@ -5,7 +5,6 @@ import { RecoilRoot, useSetRecoilState } from 'recoil';
 import BoaderPage from './Pages/BoaderPage';
 import LoginPage from './Pages/LoginPage';
 import WriteBoard from './Pages/WriteBoard';
-import { Token } from './Atoms/BoardAtom';
 
 const GlobalStyle = createGlobalStyle`
 	body{
@@ -14,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
 		height: 100vh;
 	}	
 `;
-console.log(process.env);
 function App() {
 	const queryClient = new QueryClient();
 	return (
