@@ -13,7 +13,7 @@ import { tokenState } from '../Atoms/BoardAtom';
 import { IToken, ITokenDecode } from '../Types/boaderType';
 
 const InputText = styled.input`
-	width: 400px;
+	width: 100%;
 	font-size: 20px;
 	padding: 20px;
 	border-radius: 10px;
@@ -46,6 +46,8 @@ const InputBox = styled.div`
 	align-items: center;
 `;
 const InputContainer = styled.form`
+	width: 80%;
+	max-width: 445px;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;
@@ -57,7 +59,7 @@ const InputSubmitDisable = styled.input`
 	box-shadow: 0 0 40px 40px #cecece inset, 0 0 0 0 #cecece;
 	transition: all 150ms ease-in-out;
 	background-color: #cecece;
-	width: 445px;
+	width: 100%;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;

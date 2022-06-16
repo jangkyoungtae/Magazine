@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { userApi } from '../API/userApi';
 
 const InputText = styled.input`
-	width: 400px;
+	width: 90%;
 	font-size: 20px;
 	padding: 20px;
 	border-radius: 10px;
@@ -19,7 +19,7 @@ const InputSubmit = styled.input`
 	color: white;
 	box-shadow: 0 0 40px 40px #2b923f inset, 0 0 0 0 #2b923f;
 	transition: all 150ms ease-in-out;
-	width: 445px;
+	width: 100%;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;
@@ -39,7 +39,7 @@ const InputSubmitDisable = styled.input`
 	box-shadow: 0 0 40px 40px #cecece inset, 0 0 0 0 #cecece;
 	transition: all 150ms ease-in-out;
 	background-color: #cecece;
-	width: 445px;
+	width: 100%;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;
@@ -47,7 +47,9 @@ const InputSubmitDisable = styled.input`
 	border-radius: 10px;
 `;
 
-const InputAllow = styled.span``;
+const InputAllow = styled.span`
+	width: 100%;
+`;
 
 const InputBox = styled.div`
 	margin: 40px;
@@ -58,6 +60,8 @@ const InputBox = styled.div`
 	flex-direction: column;
 `;
 const InputContainer = styled.form`
+	width: 80%;
+	max-width: 445px;
 	box-sizing: border-box;
 	justify-content: center;
 	align-items: center;

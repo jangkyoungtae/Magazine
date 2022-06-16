@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { IBoaderList, IToken } from '../Types/boaderType';
+import { IBoaderList } from '../Types/boaderType';
 
 const { persistAtom } = recoilPersist();
 

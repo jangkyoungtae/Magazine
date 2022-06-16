@@ -53,7 +53,7 @@ export default function LoginPagePresenter() {
 					item="회원가입"
 					onClickEvent={moveSignup}
 					color="#2b923f"
-					width={445}
+					width={19}
 					height={60}
 					fSize={35}
 					radius={10}

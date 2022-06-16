@@ -7,7 +7,7 @@ const Container = styled.div<{ width?: number; height?: number; radius?: number;
 	color: white;
 	box-shadow: 0 0 40px 40px ${(props) => props.color} inset, 0 0 0 0 ${(props) => props.color};
 	transition: all 150ms ease-in-out;
-	width: ${(props) => (props.width ? props.width : 100)}px;
+	width: ${(props) => (props.width ? `${props.width}%` : '100%')};
 	height: ${(props) => (props.height ? props.height : 50)}px;
 	display: flex;
 	justify-content: center;
