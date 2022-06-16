@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-console */
+import jwtDecode from 'jwt-decode';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -9,6 +10,7 @@ import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { userApi } from '../API/userApi';
 import { tokenState } from '../Atoms/BoardAtom';
+import { IToken, ITokenDecode } from '../Types/boaderType';
 
 const InputText = styled.input`
 	width: 400px;
@@ -79,8 +81,12 @@ export default function LoginForm() {
 			if (data) {
 				Swal.fire('환영합니다.!!', '로그인에 성공 하셨습니다.', 'success').then((result) => {
 					if (result.value) {
-						setToken(data.data);
-						console.log(result);
+						const das: ITokenDecode = jwtDecode(data.data);
+						const tokenData: IToken = {
+							token: data.data,
+							userId: das.sub,
+						};
+						setToken(tokenData);
 						navigate('/');
 					}
 				});

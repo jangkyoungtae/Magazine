@@ -27,5 +27,9 @@ export interface ITestList {
 }
 
 export interface IToken {
-	Authorization: string;
+	token: string;
+	userId: string;
+}
+export interface ITokenDecode {
+	sub: string;
 }
