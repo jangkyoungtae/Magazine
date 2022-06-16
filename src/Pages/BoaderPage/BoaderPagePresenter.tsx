@@ -100,7 +100,7 @@ export default function BoaderPagePresenter() {
 								onClickEvent={movePageAdd}
 								item="글 작성"
 								color="#1f1f1f"
-								width={80}
+								width={100}
 								height={80}
 								fSize={30}
 							/>

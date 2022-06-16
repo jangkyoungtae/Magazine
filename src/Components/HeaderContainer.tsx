@@ -35,6 +35,7 @@ const ProfileImage = styled.img`
 `;
 
 const ButtonBox = styled.div`
+	width: 7em;
 	background-color: white;
 	border-radius: 20px;
 	margin-right: 30px;
@@ -78,6 +79,7 @@ export default function HeaderContainer() {
 						color="#1f1f1f"
 						onClickEvent={logoutHandle}
 						fSize={30}
+						width={100}
 						radius={20}
 					/>
 				</ButtonBox>

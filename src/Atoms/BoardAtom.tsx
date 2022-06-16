@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { IBoaderList } from '../Types/boaderType';
 

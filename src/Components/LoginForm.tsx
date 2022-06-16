@@ -84,6 +84,7 @@ export default function LoginForm() {
 				Swal.fire('환영합니다.!!', '로그인에 성공 하셨습니다.', 'success').then((result) => {
 					if (result.value) {
 						const das: ITokenDecode = jwtDecode(data.data);
+						console.log(das);
 						const tokenData: IToken = {
 							token: data.data,
 							userId: das.sub,

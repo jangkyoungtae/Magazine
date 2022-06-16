@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-import { Modal } from '@mui/material';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -145,7 +144,9 @@ const TextMore = styled.span`
 `;
 
 const ButtonBox = styled.div`
+	width: 40%;
 	display: flex;
+	justify-content: end;
 `;
 
 export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element {
@@ -158,7 +159,6 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 	const [heart, setHeart] = useState(false);
 	const [moreText, setMoreText] = useState(card.content && card.content.length < 30);
 	const navigate = useNavigate();
-	console.log(card);
 	const queryClient = useQueryClient();
 
 	const boadrDelMutate = useMutation((addData: IBoaderList) => boardApi.callDelBoard(addData), {
@@ -211,24 +211,28 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 					<Id>{card.nickname}</Id>
 				</Profile>
 				<ButtonBox>
-					<CustomButton
-						item="수정"
-						onClickEvent={modifyClick}
-						width={45}
-						height={45}
-						radius={70}
-						color="#2e2e2e"
-						fSize={25}
-					/>
-					<CustomButton
-						item="삭제"
-						onClickEvent={deleteClick}
-						width={45}
-						height={45}
-						radius={70}
-						color="#2e2e2e"
-						fSize={25}
-					/>
+					<ButtonBox>
+						<CustomButton
+							item="수정"
+							onClickEvent={modifyClick}
+							width={100}
+							height={45}
+							radius={70}
+							color="#2e2e2e"
+							fSize={25}
+						/>
+					</ButtonBox>
+					<ButtonBox>
+						<CustomButton
+							item="삭제"
+							onClickEvent={deleteClick}
+							width={100}
+							height={45}
+							radius={70}
+							color="#2e2e2e"
+							fSize={25}
+						/>
+					</ButtonBox>
 				</ButtonBox>
 			</ProfileBox>
 			<CardContainer onClick={handleOpen}>
