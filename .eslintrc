@@ -5,9 +5,10 @@
         "react-hooks"
     ],
     "env": {
-        "browser": true,
         "node": true,
-        "commonjs": true
+        "commonjs": true,
+        "browser": true,
+        "es6": true
     },
     "extends": [
         "prettier",
@@ -17,7 +18,7 @@
         "plugin:prettier/recommended"
     ],
     "globals": {
-        "$": true
+        "process": true
     },
     "settings": {
         "import/resolver": {

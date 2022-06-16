@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { boardApi } from '../../API/boadersApi';
-import BoardAtom from '../../Atoms/BoardAtom';
+import BoardAtom, { tokenState } from '../../Atoms/BoardAtom';
 import { IBoaderList } from '../../Types/boaderType';
 import BoaderPagePresenter from './BoaderPagePresenter';
 
 export default function BoaderPageContainer() {
 	const setBoarder = useSetRecoilState<Array<IBoaderList>>(BoardAtom);
+	const token = useRecoilValue(tokenState);
+	const navigate = useNavigate();
 	const { isLoading } = useQuery(
 		'boader_list',
 		async ({ pageParam }) => {
@@ -20,6 +22,6 @@ export default function BoaderPageContainer() {
 			},
 		}
 	);
-
+	if (!token) navigate('/login');
 	return <div>{isLoading ? <div>로딩중...</div> : <BoaderPagePresenter />}</div>;
 }

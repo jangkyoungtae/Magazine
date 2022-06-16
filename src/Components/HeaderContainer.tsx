@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 import { useNavigate } from 'react-router-dom';
+import { useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { tokenState } from '../Atoms/BoardAtom';
 import CustomButton from './CustomButton';
 // import SearchInput from './SearchInput';
 
@@ -40,8 +42,10 @@ const ButtonBox = styled.div`
 
 export default function HeaderContainer() {
 	const navigate = useNavigate();
-	const token = localStorage.getItem('token');
+	const token = localStorage.getItem('recoil-persist');
+	const resetToken = useResetRecoilState(tokenState);
 	const logoutHandle = () => {
+		resetToken();
 		localStorage.clear();
 		navigate('/login');
 	};

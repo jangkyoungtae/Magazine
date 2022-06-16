@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 import { IBoaderList } from '../Types/boaderType';
+
+const { persistAtom } = recoilPersist();
 
 export default atom<Array<IBoaderList>>({
 	key: 'myBoarders',
@@ -17,7 +20,8 @@ export default atom<Array<IBoaderList>>({
 	],
 });
 
-export const Token = atom<boolean>({
-	key: 'isLogin',
-	default: false,
+export const tokenState = atom({
+	key: 'token',
+	default: '',
+	effects_UNSTABLE: [persistAtom],
 });

@@ -4,8 +4,12 @@ import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 import { userApi } from '../API/userApi';
+import { tokenState } from '../Atoms/BoardAtom';
 
 const InputText = styled.input`
 	width: 400px;
@@ -60,6 +64,8 @@ const InputSubmitDisable = styled.input`
 	border-radius: 10px;
 `;
 
+const MySwal = withReactContent(Swal);
+
 export default function LoginForm() {
 	const navigate = useNavigate();
 
@@ -69,11 +75,18 @@ export default function LoginForm() {
 
 	const { register, handleSubmit } = useForm();
 
+	const [token, setToken] = useRecoilState(tokenState);
+
 	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
 		onSuccess: (data) => {
 			if (data) {
-				localStorage.setItem('token', data.data);
-				navigate('/');
+				Swal.fire('환영합니다.!!', '로그인에 성공 하셨습니다.', 'success').then((result) => {
+					if (result.value) {
+						setToken(data.data);
+						console.log(result);
+						navigate('/');
+					}
+				});
 			}
 		},
 	});
