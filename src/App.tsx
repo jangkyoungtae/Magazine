@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useRecoilValue } from 'recoil';
 
 import BoaderPage from './Pages/BoaderPage';
 import LoginPage from './Pages/LoginPage';
 import WriteBoard from './Pages/WriteBoard';
-import { tokenState } from './Atoms/BoardAtom';
 
 const GlobalStyle = createGlobalStyle`
 	body{

@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 import { userApi } from '../API/userApi';
 import { tokenState } from '../Atoms/BoardAtom';
@@ -64,8 +63,6 @@ const InputSubmitDisable = styled.input`
 	border-radius: 10px;
 `;
 
-const MySwal = withReactContent(Swal);
-
 export default function LoginForm() {
 	const navigate = useNavigate();
 
@@ -75,7 +72,7 @@ export default function LoginForm() {
 
 	const { register, handleSubmit } = useForm();
 
-	const [token, setToken] = useRecoilState(tokenState);
+	const setToken = useSetRecoilState(tokenState);
 
 	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
 		onSuccess: (data) => {
