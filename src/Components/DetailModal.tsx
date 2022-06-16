@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Box, Modal, Typography } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
@@ -95,6 +95,7 @@ const HeartText = styled.p`
 	font-family: 'Gaegu';
 	font-weight: 600;
 `;
+
 function TodoModal({
 	open,
 	setOpen,
