@@ -4,7 +4,7 @@ export interface IBoaderList {
 	content: string;
 	img_url: string;
 	likes: number;
-	type: number;
+	layoutType: number;
 }
 
 export interface IBorder {
@@ -27,8 +27,8 @@ export interface ITestList {
 }
 
 export interface IToken {
-	token: string;
-	userId: string;
+	token: string | null;
+	userId: string | null;
 }
 export interface ITokenDecode {
 	sub: string;

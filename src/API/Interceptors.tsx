@@ -1,13 +1,18 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 	console.info(`[request] [${JSON.stringify(config)}]`);
-	config.headers = {
-		Authorization: localStorage.getItem('token') || false,
-		'Content-Type': 'application/json',
-	};
+	const localToken = localStorage.getItem('recoil-persist');
+	if (localToken) {
+		const toto = JSON.parse(localToken);
+		config.headers = {
+			Authorization: toto.token.token || 0 || false,
+			'Content-Type': 'application/json',
+		};
+	}
 	return config;
 };
 

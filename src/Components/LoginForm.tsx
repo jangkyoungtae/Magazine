@@ -86,7 +86,7 @@ export default function LoginForm() {
 							token: data.data,
 							userId: das.sub,
 						};
-						setToken(tokenData);
+						setToken(JSON.stringify(tokenData));
 						navigate('/');
 					}
 				});

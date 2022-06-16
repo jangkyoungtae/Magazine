@@ -3,12 +3,11 @@ import { FieldValues } from 'react-hook-form';
 import { IBoaderList } from '../Types/boaderType';
 import baseApi from './baseApi';
 
-const callBoaderList = async ({ pageParam = 1 }) => {
+const callBoaderList = async () => {
 	try {
 		const data = await baseApi.get(`/boards`);
 		return data;
 	} catch (e) {
-		console.log('list 오류', e);
 		return e;
 	}
 };
@@ -76,7 +75,7 @@ const callModifyBoard = async (value: FieldValues, type: number, card?: IBoaderL
 };
 
 export const boardApi = {
-	callBoaderList: (pageParam: number) => callBoaderList({ pageParam }),
+	callBoaderList: () => callBoaderList(),
 	callDelBoard: (card?: IBoaderList) => callDelBoard(card),
 	callAddBoard: (data: FieldValues, type: number) => callAddBoard(data, type),
 	callModifyBoard: (value: FieldValues, type: number, card?: IBoaderList) => callModifyBoard(value, type, card),
