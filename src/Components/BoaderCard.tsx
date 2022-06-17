@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable no-console */
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -9,6 +8,8 @@ import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { boardApi } from '../API/boadersApi';
 import { tokenState } from '../Atoms/BoardAtom';
+import useBoardHooks from '../Hooks/useBoardHooks';
+import useLikeHooks from '../Hooks/useLikeHooks';
 import { IBoaderList } from '../Types/boaderType';
 import jwtUtils from '../util/JwtUtil';
 import util from '../util/util';
@@ -155,43 +156,26 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 		setOpen(true);
 	};
 	const token = useRecoilValue(tokenState);
-	const [heart, setHeart] = useState<boolean>();
+	const [heart, setHeart] = useState<boolean>(false);
 	const [myBoard, setHMyBoard] = useState(false);
 	const navigate = useNavigate();
-	const queryClient = useQueryClient();
+	const { likesDelMutate, likesAddMutate } = useLikeHooks(setHeart);
+	const { boadrDelMutate } = useBoardHooks();
 
-	const boadrDelMutate = useMutation((addData: IBoaderList) => boardApi.callDelBoard(addData), {
-		onSuccess: () => {
-			queryClient.invalidateQueries('boader_list');
-		},
-	});
-	const likesAddMutate = useMutation((addData: number) => boardApi.callAddLikes(addData), {
-		onSuccess: () => {
-			queryClient.invalidateQueries('boader_list');
-			setHeart(true);
-		},
-	});
-	const likesDelMutate = useMutation((addData: number) => boardApi.callDelLikes(addData), {
-		onSuccess: () => {
-			queryClient.invalidateQueries('boader_list');
-			setHeart(false);
-		},
-	});
 	const heartClick = () => {
 		if (!token && token === '') Swal.fire('로그인 요청', '로그인이 필요한 서비스 입니다 .', 'error');
-		else likesAddMutate.mutate(card.id);
+		else likesAddMutate(card.id);
 	};
 
 	const heartDelClick = () => {
-		likesDelMutate.mutate(card.id);
+		likesDelMutate(card.id);
 	};
 
 	const deleteClick = () => {
-		boadrDelMutate.mutate(card);
+		boadrDelMutate(card);
 	};
 
 	const modifyClick = () => {
-		console.log('클릭했다test');
 		navigate('/write', {
 			state: {
 				card,

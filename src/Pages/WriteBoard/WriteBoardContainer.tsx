@@ -11,12 +11,8 @@ export default function WriteBoardContainer() {
 	const navigate = useNavigate();
 	const token = useRecoilValue(tokenState);
 	const state = location.state as { card: IBoaderList };
-	const [isAuth, setIsAuth] = useState(false);
 	useEffect(() => {
-		if (jwtUtils.isAuth(token)) {
-			setIsAuth(true);
-		} else {
-			setIsAuth(false);
+		if (!jwtUtils.isAuth(token)) {
 			navigate('/');
 		}
 	}, [token]);

@@ -76,7 +76,7 @@ export const boardApi = {
 	callBoaderList: () => callBoaderList(),
 	callDelBoard: (card?: IBoaderList) => callDelBoard(card),
 	callAddBoard: (data: FieldValues, type: number) => callAddBoard(data, type),
-	callModifyBoard: (value: FieldValues, type: number, card?: IBoaderList) => callModifyBoard(value, type, card),
+	callModifyBoard: (value: FieldValues, type: number, card: IBoaderList) => callModifyBoard(value, type, card),
 	callAddLikes: (id: number) => callAddLikes(id),
 	callDelLikes: (id: number) => callDelLikes(id),
 };

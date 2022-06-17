@@ -1,17 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
-	console.info(`[request] [${JSON.stringify(config)}]`);
 	const localToken = localStorage.getItem('recoil-persist');
 	if (localToken) {
 		const toto = JSON.parse(localToken);
-		console.log(toto);
 		if (toto.token !== '') {
 			const toto2 = JSON.parse(toto.token);
-			console.log(toto2);
 			if (toto2) {
 				config.headers = {
 					Authorization: toto2.token || 0 || false,
@@ -24,17 +20,17 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 };
 
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {
-	console.error(`[request error] [${JSON.stringify(error)}]`);
+	// console.error(`[request error] [${JSON.stringify(error)}]`);
 	return Promise.reject(error);
 };
 
 const onResponse = (response: AxiosResponse): AxiosResponse => {
-	console.info(`[response] [${JSON.stringify(response)}]`);
+	// console.info(`[response] [${JSON.stringify(response)}]`);
 	return response;
 };
 
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
-	console.error(`[response error] [${JSON.stringify(error)}]`);
+	// console.error(`[response error] [${JSON.stringify(error)}]`);
 	return Promise.reject(error);
 };
 

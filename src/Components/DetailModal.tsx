@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { boardApi } from '../API/boadersApi';
 import { tokenState } from '../Atoms/BoardAtom';
+import useLikeHooks from '../Hooks/useLikeHooks';
 import { IBoaderList } from '../Types/boaderType';
 import jwtUtils from '../util/JwtUtil';
 import util from '../util/util';
@@ -111,40 +112,28 @@ function TodoModal({
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	card: IBoaderList;
 	heart: boolean | undefined;
-	setHeart: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+	setHeart: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
 	const token = useRecoilValue(tokenState);
 	const handleClose = () => {
 		setOpen(false);
 	};
+	const { likesAddMutate, likesDelMutate } = useLikeHooks(setHeart);
 
-	const queryClient = useQueryClient();
-	const likesAddMutate = useMutation((addData: number) => boardApi.callAddLikes(addData), {
-		onSuccess: () => {
-			queryClient.invalidateQueries('boader_list');
-			setHeart(!heart);
-		},
-	});
-	const likesDelMutate = useMutation((addData: number) => boardApi.callDelLikes(addData), {
-		onSuccess: () => {
-			queryClient.invalidateQueries('boader_list');
-			setHeart(!heart);
-		},
-	});
 	const heartClick = () => {
 		if (!token && token === '') Swal.fire('로그인 요청', '로그인이 필요한 서비스 입니다 .', 'error');
-		else likesAddMutate.mutate(card.id);
+		else likesAddMutate(card.id);
 	};
 
 	const heartDelClick = () => {
-		likesDelMutate.mutate(card.id);
+		likesDelMutate(card.id);
 	};
 	useEffect(() => {
 		if (jwtUtils.isAuth(token)) {
 			const userId = jwtUtils.getId(token);
 			setHeart(card.likes.includes(userId));
 		}
-	}, [card.likes, setHeart, token]);
+	}, []);
 	return (
 		<Modal
 			open={open}

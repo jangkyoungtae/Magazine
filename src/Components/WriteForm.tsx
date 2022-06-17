@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { boardApi } from '../API/boadersApi';
+import useBoardHooks from '../Hooks/useBoardHooks';
 import { IBoaderList } from '../Types/boaderType';
 
 const InputText = styled.textarea`
@@ -127,27 +128,11 @@ export default function WriteForm({ card, type }: { card?: IBoaderList; type: nu
 	const [imageUrl, setImageUrl] = useState<string | undefined>(card?.img_url);
 	const [inputContents, setInputContents] = useState<string | undefined>(card?.content);
 	const navigate = useNavigate();
-	const queryClient = useQueryClient();
 	/*
 	추가하는 R-Q Mutation
 	addData :react-hook-form 에서 전달받은 값
 	*/
-	const mutation = useMutation((addData: FieldValues) => boardApi.callAddBoard(addData, type), {
-		onSuccess: () => {
-			queryClient.invalidateQueries('boader_list');
-		},
-	});
-
-	/*
-	수정하는 R-Q Mutation
-	upData :react-hook-form 에서 전달받은 값
-	card?.card.id : 해당 게시물의 아이디
-	*/
-	const upMutation = useMutation((upData: FieldValues) => boardApi.callModifyBoard(upData, type, card), {
-		onSuccess: () => {
-			queryClient.invalidateQueries('boader_list');
-		},
-	});
+	const { updateBoard, addBoard } = useBoardHooks();
 	const { register, handleSubmit } = useForm();
 
 	/*
@@ -156,15 +141,12 @@ export default function WriteForm({ card, type }: { card?: IBoaderList; type: nu
 	현재 게시물의 데이터를가지고 있다면 수정
 	현재 게시물 정보가없다면 추가
 	*/
-	const onSubmit = useCallback(
-		(data: FieldValues) => {
-			console.log('test');
-			if (!card) mutation.mutate(data);
-			else upMutation.mutate(data);
-			navigate('/');
-		},
-		[card, mutation, navigate, upMutation]
-	);
+	const onSubmit = useCallback((data: FieldValues) => {
+		console.log('test');
+		if (!card) addBoard({ addData: data, type });
+		else updateBoard({ upData: data, type, card });
+		navigate('/');
+	}, []);
 
 	/*
 	react-hook-form 의 input 파일 형식의 데이텨 변경시
