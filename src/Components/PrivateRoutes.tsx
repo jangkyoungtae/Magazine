@@ -9,7 +9,8 @@ interface PrivateRouteProps {
 	component: any;
 	path: string;
 }
-function PrivateRoute(props: PrivateRouteProps) {
+// eslint-disable-next-line func-names
+export default function (props: PrivateRouteProps) {
 	// 넘어오는 props를 파악하는게 중요.
 	// path, component ....
 	// recoil에 토큰의 정보가 담겨있다!
@@ -28,5 +29,3 @@ function PrivateRoute(props: PrivateRouteProps) {
 	}
 	return <RouteComponent />;
 }
-
-export default PrivateRoute;
