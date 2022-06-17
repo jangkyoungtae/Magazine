@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
-import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Swal from 'sweetalert2';
 import { tokenState } from '../Atoms/BoardAtom';
@@ -8,13 +7,12 @@ import jwtUtils from '../util/JwtUtil';
 
 interface PrivateRouteProps {
 	component: any;
-	path: any;
+	path: string;
 }
 function PrivateRoute(props: PrivateRouteProps) {
 	// 넘어오는 props를 파악하는게 중요.
 	// path, component ....
 	// recoil에 토큰의 정보가 담겨있다!
-	console.log(props);
 	const token = useRecoilValue(tokenState);
 	const navigate = useNavigate();
 	const { component: RouteComponent, path } = props;

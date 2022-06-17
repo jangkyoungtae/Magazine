@@ -142,11 +142,6 @@ const HeartText = styled.p`
 	font-weight: 600;
 `;
 
-const TextMore = styled.span`
-	font-size: 18px;
-	cursor: pointer;
-`;
-
 const ButtonBox = styled.div`
 	width: 40%;
 	display: flex;
@@ -162,7 +157,6 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 	const token = useRecoilValue(tokenState);
 	const [heart, setHeart] = useState<boolean>();
 	const [myBoard, setHMyBoard] = useState(false);
-	const [moreText, setMoreText] = useState(card.content && card.content.length < 30);
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
