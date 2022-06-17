@@ -1,12 +1,16 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 import { boardApi } from '../API/boadersApi';
+import { tokenState } from '../Atoms/BoardAtom';
 import { IBoaderList } from '../Types/boaderType';
+import jwtUtils from '../util/JwtUtil';
 import util from '../util/util';
 import CustomButton from './CustomButton';
 import TodoModal from './DetailModal';
@@ -155,8 +159,9 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 	const handleOpen = () => {
 		setOpen(true);
 	};
-
-	const [heart, setHeart] = useState(false);
+	const token = useRecoilValue(tokenState);
+	const [heart, setHeart] = useState<boolean>();
+	const [myBoard, setHMyBoard] = useState(false);
 	const [moreText, setMoreText] = useState(card.content && card.content.length < 30);
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -169,17 +174,18 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 	const likesAddMutate = useMutation((addData: number) => boardApi.callAddLikes(addData), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
-			setHeart(!heart);
+			setHeart(true);
 		},
 	});
 	const likesDelMutate = useMutation((addData: number) => boardApi.callDelLikes(addData), {
 		onSuccess: () => {
 			queryClient.invalidateQueries('boader_list');
-			setHeart(!heart);
+			setHeart(false);
 		},
 	});
 	const heartClick = () => {
-		likesAddMutate.mutate(card.id);
+		if (!token && token === '') Swal.fire('로그인 요청', '로그인이 필요한 서비스 입니다 .', 'error');
+		else likesAddMutate.mutate(card.id);
 	};
 
 	const heartDelClick = () => {
@@ -199,10 +205,13 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 		});
 	};
 
-	const moreClick = () => {
-		setMoreText(!moreText);
-	};
-
+	useEffect(() => {
+		if (jwtUtils.isAuth(token)) {
+			const userId = jwtUtils.getId(token);
+			setHeart(card.likes.includes(userId));
+			setHMyBoard(card.userId === userId);
+		}
+	}, []);
 	return (
 		<CardContainerBox>
 			<ProfileBox>
@@ -210,47 +219,40 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 					<ProfileImage src="https://d3kxs6kpbh59hp.cloudfront.net/community/COMMUNITY/1bd033059e59464cbe7309a68ce6a569/5034f194ac3a4258aa4cdfa3e7f1205c_1650014872.jpg" />
 					<Id>{card.nickname}</Id>
 				</Profile>
-				<ButtonBox>
+				{myBoard && (
 					<ButtonBox>
-						<CustomButton
-							item="수정"
-							onClickEvent={modifyClick}
-							width={100}
-							height={45}
-							radius={70}
-							color="#2e2e2e"
-							fSize={25}
-						/>
+						<ButtonBox>
+							<CustomButton
+								item="수정"
+								onClickEvent={modifyClick}
+								width={100}
+								height={45}
+								radius={70}
+								color="#2e2e2e"
+								fSize={25}
+							/>
+						</ButtonBox>
+						<ButtonBox>
+							<CustomButton
+								item="삭제"
+								onClickEvent={deleteClick}
+								width={100}
+								height={45}
+								radius={70}
+								color="#2e2e2e"
+								fSize={25}
+							/>
+						</ButtonBox>
 					</ButtonBox>
-					<ButtonBox>
-						<CustomButton
-							item="삭제"
-							onClickEvent={deleteClick}
-							width={100}
-							height={45}
-							radius={70}
-							color="#2e2e2e"
-							fSize={25}
-						/>
-					</ButtonBox>
-				</ButtonBox>
+				)}
 			</ProfileBox>
 			<CardContainer onClick={handleOpen}>
-				<TodoModal open={open} setOpen={setOpen} card={card} />
+				<TodoModal open={open} setOpen={setOpen} card={card} heart={heart} setHeart={setHeart} />
 
 				<CardBodyBox type={card.layoutType}>
 					{card.content && (
 						<ConotentBox className="first" type={card.layoutType}>
-							{moreText ? (
-								<Content>
-									{`${card.content}`}
-									{card.content.length > 50 && <TextMore onClick={moreClick}>&nbsp;&nbsp;&nbsp;접기 </TextMore>}
-								</Content>
-							) : (
-								<Content>
-									{card.content.substring(0, 50)}...<TextMore onClick={moreClick}>더보기</TextMore>
-								</Content>
-							)}
+							<Content>{card.content.substring(0, 50)}...</Content>
 						</ConotentBox>
 					)}
 					<ContentImageBox className="second">
@@ -264,7 +266,7 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 				</CardBodyBox>
 			</CardContainer>
 			<HeartBox>
-				<HeartText>좋아요 {util.like(card.likes)}</HeartText>
+				<HeartText>좋아요 {util.like(card.likes.length)}</HeartText>
 				<HeartImage
 					onClick={heart ? heartDelClick : heartClick}
 					src={!heart ? '/img/heart.png' : '/img/heart_pick.png'}
