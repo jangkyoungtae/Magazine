@@ -141,12 +141,15 @@ export default function WriteForm({ card, type }: { card?: IBoaderList; type: nu
 	현재 게시물의 데이터를가지고 있다면 수정
 	현재 게시물 정보가없다면 추가
 	*/
-	const onSubmit = useCallback((data: FieldValues) => {
-		console.log('test');
-		if (!card) addBoard({ addData: data, type });
-		else updateBoard({ upData: data, type, card });
-		navigate('/');
-	}, []);
+	const onSubmit = useCallback(
+		(data: FieldValues) => {
+			console.log('test');
+			if (!card) addBoard({ addData: data, type });
+			else updateBoard({ upData: data, type, card });
+			navigate('/');
+		},
+		[addBoard, card, navigate, type, updateBoard]
+	);
 
 	/*
 	react-hook-form 의 input 파일 형식의 데이텨 변경시

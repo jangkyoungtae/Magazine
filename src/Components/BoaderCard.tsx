@@ -1,12 +1,10 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
-import { boardApi } from '../API/boadersApi';
 import { tokenState } from '../Atoms/BoardAtom';
 import useBoardHooks from '../Hooks/useBoardHooks';
 import useLikeHooks from '../Hooks/useLikeHooks';
@@ -24,7 +22,6 @@ const CardContainer = styled.article`
 	padding: 20px;
 	width: 100%;
 	height: 80%;
-	margin: 20px;
 	cursor: pointer;
 `;
 
@@ -36,8 +33,8 @@ const CardContainerBox = styled.article`
 	justify-content: center;
 	align-items: center;
 	padding: 20px;
-	width: 80%;
-	height: 80%;
+	width: 85%;
+	height: 85%;
 	margin: 20px;
 
 	&:hover {
@@ -78,7 +75,6 @@ const ConotentBox = styled.div<{ type: number }>`
 `;
 const ContentImageBox = styled.div`
 	background-color: white;
-	padding: 10px;
 
 	box-sizing: border-box;
 	overflow: hidden;
@@ -189,7 +185,7 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 			setHeart(card.likes.includes(userId));
 			setHMyBoard(card.userId === userId);
 		}
-	}, []);
+	}, [card.likes, card.userId, token]);
 	return (
 		<CardContainerBox>
 			<ProfileBox>
@@ -230,7 +226,7 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 				<CardBodyBox type={card.layoutType}>
 					{card.content && (
 						<ConotentBox className="first" type={card.layoutType}>
-							<Content>{card.content.substring(0, 50)}...</Content>
+							<Content>{card.content.length > 50 ? `${card.content.substring(0, 50)}...` : card.content}</Content>
 						</ConotentBox>
 					)}
 					<ContentImageBox className="second">

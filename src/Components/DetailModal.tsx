@@ -2,11 +2,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Box, Modal } from '@mui/material';
 import { useEffect } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
-import { boardApi } from '../API/boadersApi';
 import { tokenState } from '../Atoms/BoardAtom';
 import useLikeHooks from '../Hooks/useLikeHooks';
 import { IBoaderList } from '../Types/boaderType';
@@ -133,7 +131,7 @@ function TodoModal({
 			const userId = jwtUtils.getId(token);
 			setHeart(card.likes.includes(userId));
 		}
-	}, []);
+	}, [card.likes, setHeart, token]);
 	return (
 		<Modal
 			open={open}
