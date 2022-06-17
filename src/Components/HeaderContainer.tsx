@@ -1,14 +1,13 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 import { useNavigate } from 'react-router-dom';
-import { useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { tokenState } from '../Atoms/BoardAtom';
 import CustomButton from './CustomButton';
 // import SearchInput from './SearchInput';
 
 const BoaderHeader = styled.div`
-	width: 100vw;
 	height: 90px;
 	background-color: black;
 	position: sticky;
@@ -43,11 +42,9 @@ const ButtonBox = styled.div`
 
 export default function HeaderContainer() {
 	const navigate = useNavigate();
-	const token = localStorage.getItem('recoil-persist');
-	const resetToken = useResetRecoilState(tokenState);
+	const [token, setToken] = useRecoilState(tokenState);
 	const logoutHandle = () => {
-		resetToken();
-		localStorage.clear();
+		setToken('');
 		navigate('/login');
 	};
 

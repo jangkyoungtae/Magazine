@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import BoaderPage from './Pages/BoaderPage';
 import LoginPage from './Pages/LoginPage';
 import WriteBoard from './Pages/WriteBoard';
+import PrivateRoute from './Components/PrivateRoutes';
 
 const GlobalStyle = createGlobalStyle`
 	body{
@@ -26,7 +27,7 @@ function App() {
 					<Route path="/login" element={<LoginPage />}>
 						<Route path=":signup" element={<LoginPage />} />
 					</Route>
-					<Route path="/write" element={<WriteBoard />} />
+					<Route path="/write" element={<PrivateRoute path="/write" component={WriteBoard} />} />
 				</Routes>
 			</BrowserRouter>
 		</QueryClientProvider>

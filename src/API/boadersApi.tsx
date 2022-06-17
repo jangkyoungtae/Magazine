@@ -62,8 +62,6 @@ const callModifyBoard = async (value: FieldValues, type: number, card?: IBoaderL
 		forms.append('layoutType', type.toString());
 		if (value.image[0]) {
 			forms.append('img', value.image[0]);
-		} else {
-			forms.append('img', card.img_url);
 		}
 	}
 	const res = await baseApi.post('/boards', forms, {

@@ -1,11 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Box, Modal } from '@mui/material';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 import { boardApi } from '../API/boadersApi';
+import { tokenState } from '../Atoms/BoardAtom';
 import { IBoaderList } from '../Types/boaderType';
+import jwtUtils from '../util/JwtUtil';
 import util from '../util/util';
 
 const modalStyle = {
@@ -100,15 +104,20 @@ function TodoModal({
 	open,
 	setOpen,
 	card,
+	heart,
+	setHeart,
 }: {
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	card: IBoaderList;
+	heart: boolean | undefined;
+	setHeart: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }) {
-	const [heart, setHeart] = useState(false);
+	const token = useRecoilValue(tokenState);
 	const handleClose = () => {
 		setOpen(false);
 	};
+
 	const queryClient = useQueryClient();
 	const likesAddMutate = useMutation((addData: number) => boardApi.callAddLikes(addData), {
 		onSuccess: () => {
@@ -123,12 +132,19 @@ function TodoModal({
 		},
 	});
 	const heartClick = () => {
-		likesAddMutate.mutate(card.id);
+		if (!token && token === '') Swal.fire('로그인 요청', '로그인이 필요한 서비스 입니다 .', 'error');
+		else likesAddMutate.mutate(card.id);
 	};
 
 	const heartDelClick = () => {
 		likesDelMutate.mutate(card.id);
 	};
+	useEffect(() => {
+		if (jwtUtils.isAuth(token)) {
+			const userId = jwtUtils.getId(token);
+			setHeart(card.likes.includes(userId));
+		}
+	}, [card.likes, setHeart, token]);
 	return (
 		<Modal
 			open={open}
@@ -147,7 +163,7 @@ function TodoModal({
 						<ModalContent>{card.content}</ModalContent>
 					</ModalBody>
 					<ModalFoot>
-						<HeartText>좋아요 {util.like(card.likes)}</HeartText>
+						<HeartText>좋아요 {util.like(card.likes.length)}</HeartText>
 						<HeartImage
 							onClick={heart ? heartDelClick : heartClick}
 							src={!heart ? '/img/heart.png' : '/img/heart_pick.png'}

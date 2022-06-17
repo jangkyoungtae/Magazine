@@ -6,13 +6,19 @@ import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'ax
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 	console.info(`[request] [${JSON.stringify(config)}]`);
 	const localToken = localStorage.getItem('recoil-persist');
-	const toto = JSON.parse(localToken || 'test');
-	if (toto) {
-		console.log(toto.userid);
-		config.headers = {
-			Authorization: toto.token || 0 || false,
-			'Content-Type': 'application/json',
-		};
+	if (localToken) {
+		const toto = JSON.parse(localToken);
+		console.log(toto);
+		if (toto.token !== '') {
+			const toto2 = JSON.parse(toto.token);
+			console.log(toto2);
+			if (toto2) {
+				config.headers = {
+					Authorization: toto2.token || 0 || false,
+					'Content-Type': 'application/json',
+				};
+			}
+		}
 	}
 	return config;
 };

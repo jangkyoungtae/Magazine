@@ -3,7 +3,8 @@ export interface IBoaderList {
 	nickname: string;
 	content: string;
 	img_url: string;
-	likes: number;
+	likes: Array<number>;
+	userId: number;
 	layoutType: number;
 }
 
@@ -28,8 +29,9 @@ export interface ITestList {
 
 export interface IToken {
 	token: string | null;
-	userId: string | null;
+	userId: number | null;
 }
 export interface ITokenDecode {
-	sub: string;
+	exp: number;
+	userid: number;
 }

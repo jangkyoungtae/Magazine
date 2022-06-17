@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
@@ -78,8 +78,11 @@ export default function LoginForm() {
 
 	const setToken = useSetRecoilState(tokenState);
 
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
 		onSuccess: (data) => {
+			console.log(data);
 			if (data) {
 				Swal.fire('환영합니다.!!', '로그인에 성공 하셨습니다.', 'success').then((result) => {
 					if (result.value) {
@@ -87,10 +90,17 @@ export default function LoginForm() {
 						console.log(das);
 						const tokenData: IToken = {
 							token: data.data,
-							userId: das.sub,
+							userId: das.userid,
 						};
 						setToken(JSON.stringify(tokenData));
-						navigate('/');
+						const redirectUrl = searchParams.get('redirectUrl');
+						// PrivateRoute를 통해 로그인 페이지에 접속하면 redireUrl로 이동하고
+						if (redirectUrl) {
+							navigate(redirectUrl);
+							// 그렇지 않고, 로그인 페이지에 집적 접속하면 홈화면으로 이동하자
+						} else {
+							navigate('/');
+						}
 					}
 				});
 			}
