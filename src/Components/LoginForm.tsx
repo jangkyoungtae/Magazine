@@ -78,7 +78,7 @@ export default function LoginForm() {
 
 	const setToken = useSetRecoilState(tokenState);
 
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams] = useSearchParams();
 
 	const mutation = useMutation((addData: FieldValues) => userApi.callSignInUser(addData), {
 		onSuccess: (data) => {

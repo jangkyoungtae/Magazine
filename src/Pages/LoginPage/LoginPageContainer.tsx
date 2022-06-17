@@ -18,7 +18,6 @@ export default function LoginPageContainer() {
 			setIsAuth(false);
 		}
 	}, [token]);
-	console.log(token);
 	if (token || token !== '') {
 		Swal.fire('로그인 에러', '이미 로그인 중 입니다.', 'error').then((result) => {
 			if (result.value) {
