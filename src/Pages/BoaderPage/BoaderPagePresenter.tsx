@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import backgroundImage from '../../img/MOKOKO_2022_06.png';
 import BoardAtom from '../../Atoms/BoardAtom';
 import BoaderCard from '../../Components/BoaderCard';
 import CustomButton from '../../Components/CustomButton';
@@ -72,7 +73,7 @@ export default function BoaderPagePresenter() {
 		<div>
 			{count ? (
 				<div>
-					<BackgroundImage src="/img/MOKOKO_2022_06.png" />
+					<BackgroundImage src={backgroundImage} />
 					<HeaderContainer />
 					<BoaderContainer>
 						{count.map((v, i) => {

@@ -3,12 +3,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useCallback, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { boardApi } from '../API/boadersApi';
 import useBoardHooks from '../Hooks/useBoardHooks';
 import { IBoaderList } from '../Types/boaderType';
+import TypeSelectBox from './TypeSelectBox';
 
 const InputText = styled.textarea`
 	padding: 10px; /* label의 패딩값과 일치 */
@@ -124,9 +123,28 @@ const Image = styled.img`
 	object-fit: cover;
 `;
 
-export default function WriteForm({ card, type }: { card?: IBoaderList; type: number }) {
+const TypeContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	@media screen and (max-width: 1024px) {
+		flex-direction: column;
+	}
+`;
+
+const TypeBox = styled.div`
+	width: 100%;
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+export default function WriteForm({ card }: { card?: IBoaderList }) {
 	const [imageUrl, setImageUrl] = useState<string | undefined>(card?.img_url);
 	const [inputContents, setInputContents] = useState<string | undefined>(card?.content);
+
+	const [selectType, setType] = useState<number>(card ? card?.layoutType : 1);
 	const navigate = useNavigate();
 	/*
 	추가하는 R-Q Mutation
@@ -143,12 +161,11 @@ export default function WriteForm({ card, type }: { card?: IBoaderList; type: nu
 	*/
 	const onSubmit = useCallback(
 		(data: FieldValues) => {
-			console.log('test');
-			if (!card) addBoard({ addData: data, type });
-			else updateBoard({ upData: data, type, card });
+			if (!card) addBoard({ addData: data, type: selectType });
+			else updateBoard({ upData: data, type: selectType, card });
 			navigate('/');
 		},
-		[addBoard, card, navigate, type, updateBoard]
+		[addBoard, card, navigate, selectType, updateBoard]
 	);
 
 	/*
@@ -174,6 +191,13 @@ export default function WriteForm({ card, type }: { card?: IBoaderList; type: nu
 				/>
 				{/* <InputText type="text" placeholder="ID" {...register('id', { required: false, maxLength: 80 })} /> */}
 			</InputContentsBox>
+			<TypeContainer>
+				<TypeBox onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(Number(e.target.value))}>
+					<TypeSelectBox type={1} selectType={selectType} />
+					<TypeSelectBox type={2} selectType={selectType} />
+					<TypeSelectBox type={3} selectType={selectType} />
+				</TypeBox>
+			</TypeContainer>
 			<InputImageBox>
 				{imageUrl && (
 					<ImageBox>

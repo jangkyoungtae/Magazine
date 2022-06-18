@@ -6,7 +6,7 @@ import { tokenState } from '../Atoms/BoardAtom';
 import jwtUtils from '../util/JwtUtil';
 
 interface PrivateRouteProps {
-	component: any;
+	component: React.FC;
 	path: string;
 }
 // eslint-disable-next-line func-names

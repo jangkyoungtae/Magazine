@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import backgroundImage from '../../img/MOKOKO_2022_08.png';
 import TypeSelectBox from '../../Components/TypeSelectBox';
 import WriteForm from '../../Components/WriteForm';
 import { IBoaderList } from '../../Types/boaderType';
@@ -17,27 +18,6 @@ const AddContainer = styled.div`
 	width: 50%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-`;
-
-const TypeContainer = styled.div`
-	width: 20%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	@media screen and (max-width: 1024px) {
-		flex-direction: column;
-	}
-`;
-
-const TypeBox = styled.div`
-	width: 100%;
-	padding: 20px;
-
-	@media screen and (max-width: 1024px) {
-		display: flex;
-	}
 	justify-content: center;
 	align-items: center;
 `;
@@ -64,23 +44,15 @@ const LoginText = styled.h1`
 `;
 
 export default function WriteBoardPresenter({ state }: { state: IBoaderList }) {
-	const [tpye, setType] = useState<number>(1);
-
 	return (
 		<MainContainer>
 			<AddContainer>
 				<LoginText>글작성</LoginText>
 
-				<WriteForm card={state} type={tpye} />
+				<WriteForm card={state} />
 			</AddContainer>
-			<TypeContainer>
-				<TypeBox onChange={(e: React.ChangeEvent<HTMLInputElement>) => setType(Number(e.target.value))}>
-					<TypeSelectBox type={1} />
-					<TypeSelectBox type={2} />
-					<TypeSelectBox type={3} />
-				</TypeBox>
-			</TypeContainer>
-			<BackgroundImage src="/img/MOKOKO_2022_08.png" />
+
+			<BackgroundImage src={backgroundImage} />
 		</MainContainer>
 	);
 }

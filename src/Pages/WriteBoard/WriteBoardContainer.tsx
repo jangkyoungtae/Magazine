@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { tokenState } from '../../Atoms/BoardAtom';
@@ -15,6 +15,6 @@ export default function WriteBoardContainer() {
 		if (!jwtUtils.isAuth(token)) {
 			navigate('/');
 		}
-	}, [token]);
+	}, [navigate, token]);
 	return <WriteBoardPresenter state={state && state.card} />;
 }

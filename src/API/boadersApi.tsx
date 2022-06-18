@@ -64,7 +64,7 @@ const callModifyBoard = async (value: FieldValues, type: number, card?: IBoaderL
 			forms.append('img', value.image[0]);
 		}
 	}
-	const res = await baseApi.post('/boards', forms, {
+	const res = await baseApi.put(`/boards/${card?.id}`, forms, {
 		headers: {
 			'Content-Type': 'multipart/form-data',
 		},

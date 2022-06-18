@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import oulineHeart from '../img/heart.png';
+import pickHeart from '../img/heart_pick.png';
 import { tokenState } from '../Atoms/BoardAtom';
 import useLikeHooks from '../Hooks/useLikeHooks';
 import { IBoaderList } from '../Types/boaderType';
@@ -151,10 +153,7 @@ function TodoModal({
 					</ModalBody>
 					<ModalFoot>
 						<HeartText>좋아요 {util.like(card.likes.length)}</HeartText>
-						<HeartImage
-							onClick={heart ? heartDelClick : heartClick}
-							src={!heart ? '/img/heart.png' : '/img/heart_pick.png'}
-						/>
+						<HeartImage onClick={heart ? heartDelClick : heartClick} src={!heart ? oulineHeart : pickHeart} />
 					</ModalFoot>
 				</ModalContainer>
 			</Box>

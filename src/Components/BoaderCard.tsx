@@ -6,6 +6,8 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { tokenState } from '../Atoms/BoardAtom';
+import oulineHeart from '../img/heart.png';
+import pickHeart from '../img/heart_pick.png';
 import useBoardHooks from '../Hooks/useBoardHooks';
 import useLikeHooks from '../Hooks/useLikeHooks';
 import { IBoaderList } from '../Types/boaderType';
@@ -241,10 +243,7 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 			</CardContainer>
 			<HeartBox>
 				<HeartText>좋아요 {util.like(card.likes.length)}</HeartText>
-				<HeartImage
-					onClick={heart ? heartDelClick : heartClick}
-					src={!heart ? '/img/heart.png' : '/img/heart_pick.png'}
-				/>
+				<HeartImage onClick={heart ? heartDelClick : heartClick} src={!heart ? oulineHeart : pickHeart} />
 			</HeartBox>
 		</CardContainerBox>
 	);
