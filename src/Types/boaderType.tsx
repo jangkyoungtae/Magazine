@@ -2,7 +2,7 @@ export interface IBoaderList {
 	id: number;
 	nickname: string;
 	content: string;
-	img_url: string;
+	imgUrl: string;
 	likes: Array<number>;
 	userId: number;
 	layoutType: number;
@@ -32,6 +32,6 @@ export interface IToken {
 	userId: number | null;
 }
 export interface ITokenDecode {
-	exp: number;
-	userid: number;
+	EXPIRED_DATE: number;
+	USER_ID: number;
 }

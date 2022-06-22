@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CustomButton from '../../Components/CustomButton';
 import LoginForm from '../../Components/LoginForm';
 import SignupForm from '../../Components/SignupForm';
+import loginBackground from '../../img/MOKOKO_2022_04.png';
 
 const MainContainer = styled.div`
 	height: 100vh;
@@ -45,7 +46,7 @@ export default function LoginPagePresenter() {
 	};
 	return (
 		<MainContainer>
-			<BackgroundImage src="/img/MOKOKO_2022_04.png" />
+			<BackgroundImage src={loginBackground} />
 			<LoginText>{!state ? '로그인' : '회원가입'}</LoginText>
 			{!state ? <LoginForm /> : <SignupForm />}
 			{!state && (

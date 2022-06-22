@@ -86,11 +86,12 @@ export default function LoginForm() {
 			if (data) {
 				Swal.fire('환영합니다.!!', '로그인에 성공 하셨습니다.', 'success').then((result) => {
 					if (result.value) {
-						const das: ITokenDecode = jwtDecode(data.data);
-						console.log(das);
+						const tokens = data.headers.authorization.replace('BEARER ', '');
+						const das: ITokenDecode = jwtDecode(tokens);
+						console.log('test3', das);
 						const tokenData: IToken = {
-							token: data.data,
-							userId: das.userid,
+							token: tokens,
+							userId: das.USER_ID,
 						};
 						setToken(JSON.stringify(tokenData));
 						const redirectUrl = searchParams.get('redirectUrl');

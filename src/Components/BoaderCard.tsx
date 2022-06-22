@@ -149,7 +149,7 @@ const ButtonBox = styled.div`
 
 export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element {
 	const [open, setOpen] = useState(false);
-
+	console.log(card);
 	const handleOpen = () => {
 		setOpen(true);
 	};
@@ -232,7 +232,7 @@ export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element
 						</ConotentBox>
 					)}
 					<ContentImageBox className="second">
-						<ContentImage type={card.layoutType} src={card.img_url} alt="" />
+						<ContentImage type={card.layoutType} src={`http://${card.imgUrl}`} alt="" />
 					</ContentImageBox>
 					{/* <ImageSlider>
 					<ContentImageBox>

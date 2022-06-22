@@ -114,7 +114,7 @@ export default function SignupForm() {
 
 	// 비밀번호
 	const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+		const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
 		const passwordCurrent = e.target.value;
 		setPassword(passwordCurrent);
 

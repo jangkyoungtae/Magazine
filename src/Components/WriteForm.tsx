@@ -141,7 +141,7 @@ const TypeBox = styled.div`
 `;
 
 export default function WriteForm({ card }: { card?: IBoaderList }) {
-	const [imageUrl, setImageUrl] = useState<string | undefined>(card?.img_url);
+	const [imageUrl, setImageUrl] = useState<string | undefined>(card?.imgUrl);
 	const [inputContents, setInputContents] = useState<string | undefined>(card?.content);
 
 	const [selectType, setType] = useState<number>(card ? card?.layoutType : 1);

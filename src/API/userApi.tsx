@@ -4,9 +4,11 @@ import baseApi from './baseApi';
 
 const callSignUpUser = async (value: FieldValues) => {
 	const addDatas = {
+		// name: value.name,
 		nickname: value.nickname,
 		email: value.email,
 		password: value.password,
+		// password_confirm: value.password_confirm,
 	};
 	const res = await baseApi.post('/signup', addDatas);
 	return res;

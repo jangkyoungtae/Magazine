@@ -7,10 +7,11 @@ import BoaderPagePresenter from './BoaderPagePresenter';
 
 export default function BoaderPageContainer() {
 	const setBoarder = useSetRecoilState<Array<IBoaderList>>(BoardAtom);
-	const { isLoading } = useQuery(
+	const { isSuccess } = useQuery(
 		'boader_list',
 		async () => {
 			const res = await boardApi.callBoaderList();
+			console.log('test5', res);
 			return res;
 		},
 		{
@@ -20,5 +21,5 @@ export default function BoaderPageContainer() {
 		}
 	);
 
-	return <div>{isLoading ? <div>로딩중...</div> : <BoaderPagePresenter />}</div>;
+	return <div>{!isSuccess ? <div>로딩중...</div> : <BoaderPagePresenter />}</div>;
 }

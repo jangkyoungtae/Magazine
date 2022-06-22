@@ -10,7 +10,7 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
 			const toto2 = JSON.parse(toto.token);
 			if (toto2) {
 				config.headers = {
-					Authorization: toto2.token || 0 || false,
+					Authorization: `BEARER ${toto2.token}` || 0 || false,
 					'Content-Type': 'application/json',
 				};
 			}

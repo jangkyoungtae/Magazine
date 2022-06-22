@@ -50,10 +50,12 @@ const BoaderBox = styled.div`
 	justify-content: center;
 	flex-wrap: wrap;
 `;
+
 export default function BoaderPagePresenter() {
 	const [itemCount, setItemCount] = useState(1);
 	const navigate = useNavigate();
 	const count = useRecoilValue(BoardAtom);
+
 	const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
 		if (isIntersecting) {
 			setItemCount((v) => {
@@ -64,9 +66,11 @@ export default function BoaderPagePresenter() {
 			});
 		}
 	};
+
 	const movePageAdd = () => {
 		navigate('/write');
 	};
+
 	const { setTarget } = useIntersectionObserver({ onIntersect });
 
 	return (
