@@ -149,7 +149,6 @@ const ButtonBox = styled.div`
 
 export default function BoaderCard({ card }: { card: IBoaderList }): JSX.Element {
 	const [open, setOpen] = useState(false);
-	console.log(card);
 	const handleOpen = () => {
 		setOpen(true);
 	};

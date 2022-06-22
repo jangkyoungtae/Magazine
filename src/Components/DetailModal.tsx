@@ -148,7 +148,7 @@ function TodoModal({
 						<ProFileNickName>{card.nickname}</ProFileNickName>
 					</ModalHeader>
 					<ModalBody>
-						<ModalImage src={card.img_url} />
+						<ModalImage src={card.imgUrl} />
 						<ModalContent>{card.content}</ModalContent>
 					</ModalBody>
 					<ModalFoot>
