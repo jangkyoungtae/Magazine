@@ -23,7 +23,7 @@ export interface ISliderOption {
 export interface ITestList {
 	nickname: string;
 	content: string;
-	img_url: string;
+	imgUrl: string;
 	likes: number;
 }
 
